@@ -1,0 +1,12 @@
+Header,Mode,Band Ncoeff1,Band NCoeff2,Band NCoeff3,Band NCoeff4,Band NCoeff5,Band NCoeff6,Band NCoeff7,Band NCoeff8,Band NCoeff9,Band NCoeff10,Band NCoeff11,Band NCoeff12,Band NCoeff13,Band NCoeff14,Band NCoeff15,Band NCoeff16,Band NCoeff17,Band NCoeff18,Band NCoeff19,Band NCoeff20,Band NCoeff21,Band NCoeff22,Band NCoeff23,Band NCoeff24,Band MCoeff1,Band MCoeff2,Band MCoeff3,Band MCoeff4,Band MCoeff5,Band MCoeff6,Band MCoeff7,Band MCoeff8,Band MCoeff9,Band MCoeff10,Band MCoeff11,Band MCoeff12,Band MCoeff13,Band MCoeff14,Band MCoeff15,Band MCoeff16,SF1,SF2,SF3,SF4,CS1,CS2,CS3,CS4,enable,Number of Band
+A1,AUDFMT IIR,85FD,1C5A,2.20E+02,1C59,48B1,1E1B,2940,2573,024B,CB48,C766,CD85,5E2C,C9DF,37D2,BB98,370A,185F,C92F,169F,4537,1A39,D6F5,242C,7E5D,CBDD,ADC0,C882,DF53,C6BA,CA6C,C597,0BFE,1550,A6BF,18CB,446B,1BCF,D7BA,1EE1,2,2,2,2,0,0,0,0,1,4
+Header,Mode,Enable,compress threshold,compress slope,RMS,Attack const1,Attack const2,release const1,release const2,system delay,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+B1,AUDFMT ADRC,0,2600,b333,106,7f7d,3096,7ff7,4356,16,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Header,Mode,Enable,BAND1 gain,BAND1 freq,BAND1 type,BAND1 qf,BAND2 gain,BAND2 freq,BAND2 type,BAND2 qf,BAND3 gain,BAND3 freq,BAND3 type,BAND3 qf,BAND4 gain,BAND4 freq,BAND4 type,BAND4 qf,BAND5 gain,BAND5 freq,BAND5 type,BAND5 qf,BAND6 gain,BAND6 freq,BAND6 type,BAND6 qf,BAND7 gain,BAND7 freq,BAND7 type,BAND7 qf,BAND8 gain,BAND8freq,BAND8 type,BAND8 qf,,,,,,,,,,,,,,,,,
+C1,AUDFMT EQ,FFFF,0,1F4,1,016A,0,3F8,3,016A,0,7D0,3,016A,0,BB8,3,016A,0,FA0,3,016A,3,1770,3,016A,3,1B58,3,016A,3,1F40,2,016A,,,,,,,,,,,,,,,,,
+Header,Mode,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+D1,AUDPRE IIR,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Header,Mode,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+E1,AUDPRE AGC,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Header,Mode,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+F1,AUDPRE NS,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

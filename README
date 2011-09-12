@@ -1,0 +1,10 @@
+CyanogenMod device configuration for the Huawei U8160 (Vodafone Smart V858)
+
+By psyke83
+
+Based on U8150 port originally designed by marcnvidic
+Changed, improved and optimized by tilal6991
+
+Pre-Setup
+=========
+Execute "extract-files.sh" to extract prebuilt libraries (from a working device)
