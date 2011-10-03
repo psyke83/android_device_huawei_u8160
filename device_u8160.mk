@@ -154,7 +154,9 @@ PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/bin/mad2sd:system/bin/mad2sd \
     device/huawei/u8160/prebuilt/lib/egl/egl.cfg:system/lib/egl/egl.cfg \
     device/huawei/u8160/prebuilt/etc/sysctl.conf:system/etc/sysctl.conf \
-    device/huawei/u8160/prebuilt/etc/vold.fstab:system/etc/vold.fstab
+    device/huawei/u8160/prebuilt/etc/vold.fstab:system/etc/vold.fstab \
+    device/huawei/u8160/prebuilt/etc/init.d/02madteam:system/etc/init.d/02madteam \
+    device/huawei/u8160/prebuilt/etc/init.d/05mountsd:system/etc/init.d/05mountsd
 
 # Additions to build.prop
 PRODUCT_PROPERTY_OVERRIDES += \
