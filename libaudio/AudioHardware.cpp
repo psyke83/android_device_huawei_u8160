@@ -1130,7 +1130,7 @@ status_t AudioHardware::setVoiceVolume(float v)
         v = 1.0;
     }
 
-    int vol = lrint(v * 7.0);
+    int vol = lrint(v * 5.0);
     LOGD("setVoiceVolume(%f)\n", v);
     LOGI("Setting in-call volume to %d (available range is 0 to 7)\n", vol);
 
@@ -1148,7 +1148,7 @@ status_t AudioHardware::setVoiceVolume(float v)
 status_t AudioHardware::setMasterVolume(float v)
 {
     Mutex::Autolock lock(mLock);
-    int vol = ceil(v * 7.0);
+    int vol = ceil(v * 5.0);
     LOGI("Set master volume to %d.\n", vol);
     set_volume_rpc(SND_DEVICE_HANDSET, SND_METHOD_VOICE, vol, m7xsnddriverfd);
     set_volume_rpc(SND_DEVICE_SPEAKER, SND_METHOD_VOICE, vol, m7xsnddriverfd);
@@ -1165,8 +1165,8 @@ status_t AudioHardware::setMasterVolume(float v)
 #ifdef HAVE_FM_RADIO
 status_t AudioHardware::setFmVolume(float v)
 {
-    float ratio = 1.2;
-    int volume = (unsigned int)(AudioSystem::logToLinear(v) * ratio);
+    unsigned int VolValue = (unsigned int)(AudioSystem::logToLinear(v));
+    int volume = (unsigned int)(VolValue*VolValue/100);
 
     char volhex[10] = "";
     sprintf(volhex, "0x%x ", volume);
@@ -1207,15 +1207,7 @@ static status_t do_route_audio_rpc(uint32_t device,
      */
     struct msm_snd_device_config args;
     args.device = device;
-#ifdef HAVE_FM_RADIO
-    if(args.device == SND_DEVICE_FM_SPEAKER){
-           args.ear_mute = SND_MUTE_UNMUTED;
-    }else{
-	    args.ear_mute = ear_mute ? SND_MUTE_MUTED : SND_MUTE_UNMUTED;
-    }
-#else
     args.ear_mute = ear_mute ? SND_MUTE_MUTED : SND_MUTE_UNMUTED;
-#endif
     if((device != SND_DEVICE_CURRENT) && (!mic_mute)) {
         //Explicitly mute the mic to release DSP resources
         args.mic_mute = SND_MUTE_MUTED;
@@ -1259,7 +1251,7 @@ status_t AudioHardware::doAudioRouteOrMute(uint32_t device)
     }
 
 #ifdef HAVE_FM_RADIO
-    if(mFmRadioEnabled && (device == SND_DEVICE_FM_HEADSET)) {
+    if(mFmRadioEnabled && (device == SND_DEVICE_FM_HEADSET || device == SND_DEVICE_FM_SPEAKER)) {
       mute = 0;
       LOGI("unmute for radio");
     }
@@ -1861,8 +1853,8 @@ status_t AudioHardware::AudioStreamInMSM72xx::set(
     mSampleRate = config.sample_rate;
     mBufferSize = config.buffer_size;
     }
-    else if( (*pFormat == AudioSystem::AMR_NB))
-           {
+    else if(*pFormat == AudioSystem::AMR_NB)
+      {
 
       // open vocie memo input device
       status = ::open(VOICE_MEMO_DEVICE, O_RDWR);
@@ -1922,6 +1914,7 @@ status_t AudioHardware::AudioStreamInMSM72xx::set(
           mBufferSize = 320;
           break;
         }
+
 
         default:
         break;
