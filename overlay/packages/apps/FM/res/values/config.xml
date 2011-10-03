@@ -7,5 +7,5 @@
     <bool name="speaker_supported">true</bool>
 
     <!-- Whether or not seek is supported -->
-    <bool name="seek_supported">false</bool>
+    <bool name="seek_supported">true</bool>
 </resources>
