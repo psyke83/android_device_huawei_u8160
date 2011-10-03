@@ -13,6 +13,8 @@ for DIR in $DIRS; do
 done
 
 FILES="
+bin/akmd2
+bin/akmd8962
 bin/akmd8975
 bin/brcm_patchram_plus
 bin/modempre
