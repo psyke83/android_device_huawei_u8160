@@ -70,10 +70,6 @@ service iprenew_eth0 /system/bin/dhcpcd -n
     disabled
     oneshot
 
-service autoip /system/bin/dhcpcd -B -d eth0
-    disabled
-    oneshot
-
 on property:init.svc.wpa_supplicant=stopped
     stop dhcpcd_eth0
     
