@@ -26,6 +26,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libOmxCore \
     libOmxVidEnc \
+    Gallery \
     gps.u8160 \
     copybit.u8160 \
     lights.msm7k \
