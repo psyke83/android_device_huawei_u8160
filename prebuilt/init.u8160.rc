@@ -75,10 +75,18 @@ on property:init.svc.wpa_supplicant=stopped
     
 service oem_rpc_svc /system/bin/oem_rpc_svc
     oneshot
-    
-service akmd /system/bin/akmd8975
-    user compass
-    group compass misc input
+
+service akmd /system/bin/akmd2 
+    disabled
+    oneshot
+
+service akm8975 /system/bin/akmd8975
+    disabled
+    oneshot
+
+service akm8962 /system/bin/akmd8962
+    disabled
+    oneshot
 
 # bugreport is triggered by the KEY_VOLUMEUP and KEY_CENTER keycodes
 service bugreport /system/bin/dumpstate -d -v -o /sdcard/bugreports/bugreport
