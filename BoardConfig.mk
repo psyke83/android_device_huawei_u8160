@@ -67,7 +67,6 @@ BOARD_UMS_LUNFILE := "/sys/devices/platform/msm_hsusb/gadget/lun0/file"
 
 # Sensors
 TARGET_USES_OLD_LIBSENSORS_HAL := true
-BOARD_VENDOR_USE_AKMD := akm8975
 
 # Recovery
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/huawei/u8160/recovery/recovery_ui.c
@@ -80,7 +79,6 @@ BOARD_USES_GENERIC_AUDIO := false
 TARGET_PROVIDES_LIBAUDIO := true
 
 # Graphics
-TARGET_HARDWARE_3D := true
 TARGET_LIBAGL_USE_GRALLOC_COPYBITS := true
 BOARD_AVOID_DRAW_TEXTURE_EXTENSION := true
 TARGET_SF_NEEDS_REAL_DIMENSIONS := true
@@ -96,7 +94,6 @@ WIFI_DRIVER_MODULE_ARG := "firmware_path=/system/wifi/firmware.bin nvram_path=/s
 WIFI_DRIVER_MODULE_NAME := "dhd"
 WIFI_DRIVER_MODULE_PATH := "/wifi/dhd.ko"
 WPA_SUPPLICANT_VERSION := VER_0_6_X
-#BOARD_WEXT_NO_COMBO_SCAN := true
 
 # Kernel
 BOARD_KERNEL_BASE := 0x00208000
