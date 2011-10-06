@@ -30,7 +30,8 @@ PRODUCT_PACKAGES += \
     gps.u8160 \
     copybit.u8160 \
     lights.msm7k \
-    screencap
+    screencap \
+    rzscontrol
 
 # Recovery tools
 PRODUCT_PACKAGES += \
@@ -151,6 +152,10 @@ PRODUCT_COPY_FILES += \
     vendor/huawei/u8160/proprietary/lib/libmmjpeg.so:system/lib/libmmjpeg.so \
     vendor/huawei/u8160/proprietary/lib/libmmipl.so:system/lib/libmmipl.so \
     vendor/huawei/u8160/proprietary/lib/libmmprocess.so:system/lib/libmmprocess.so
+
+# Compcache
+PRODUCT_COPY_FILES += \
+    device/huawei/u8160/prebuilt/ramzswap.ko:system/lib/modules/ramzswap.ko
 
 # Other
 PRODUCT_COPY_FILES += \

@@ -6,6 +6,7 @@ dalvik.vm.heapsize=24m
 rild.libargs=-d /dev/smd0
 rild.libpath=/system/lib/libril-qc-1.so
 ro.com.google.locationfeatures=0
+ro.compcache.default=18
 ro.media.dec.jpeg.memcap=20000000
 ro.opengles.version=65537
 ro.sf.lcd_density=120
