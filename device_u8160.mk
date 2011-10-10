@@ -66,6 +66,10 @@ PRODUCT_COPY_FILES += \
     frameworks/base/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
     frameworks/base/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
 
+# Keys
+PRODUCT_COPY_FILES += \
+    device/huawei/u8160/prebuilt/qwerty.kl:system/usr/keylayout/qwerty.kl
+
 # Init files
 PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/init.u8160.rc:root/init.u8160.rc \
