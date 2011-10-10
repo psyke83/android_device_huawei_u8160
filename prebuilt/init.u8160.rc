@@ -48,7 +48,6 @@ service qmuxd /system/bin/qmuxd
 
 service hciattach /system/bin/brcm_patchram_plus \
 	--enable_hci --enable_lpm --baudrate 3000000 \
-	--bd_addr 00:18:82:23:76:1d \
 	--patchram /system/etc/bluetooth/BCM4329.hcd \
 	/dev/ttyHS0
     user bluetooth
