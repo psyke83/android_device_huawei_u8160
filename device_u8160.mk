@@ -174,6 +174,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.execution-mode=int:jit \
     dalvik.vm.heapsize=24m \
+    persist.sys.use_16bpp_alpha=1 \
     persist.sys.use_dithering=0 \
     persist.sys.purgeable_assets=1 \
     ring.delay=0 \
