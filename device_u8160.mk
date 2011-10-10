@@ -187,7 +187,7 @@ $(call inherit-product, build/target/product/full_base.mk)
 $(call inherit-product, vendor/cyanogen/products/common_full.mk)
 
 # The gps config appropriate for this device
-$(call inherit-product, device/common/gps/gps_us_supl.mk)
+$(call inherit-product, device/common/gps/gps_eu_supl.mk)
 
 # Include GSM stuff
 $(call inherit-product, vendor/cyanogen/products/gsm.mk)
