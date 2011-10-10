@@ -223,7 +223,7 @@ PRODUCT_COPY_FILES += \
     vendor/cyanogen/prebuilt/ldpi/media/bootanimation.zip:system/media/bootanimation.zip
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.modversion=CyanogenMod-7.1.0-RC1-MADTEAM
+    ro.modversion=CyanogenMod-7.1.0-MADTEAM
 
 PRODUCT_NAME := full_u8160
 PRODUCT_BRAND := huawei
