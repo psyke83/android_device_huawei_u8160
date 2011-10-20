@@ -183,6 +183,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.call_ring.delay=0 \
     ro.telephony.call_ring.multiple=false \
     ro.tether.denied=false \
+    ro.vold.umsdirtyratio=20 \
     sys.checkfs.fat=false \
     view.fading_edge_length=8 \
     view.minimum_fling_velocity=25 \
