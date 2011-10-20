@@ -16,12 +16,6 @@ on boot
     chown bluetooth bluetooth /proc/bluetooth/sleep/proto
     chmod 0660 /proc/bluetooth/sleep/proto
     
-    chmod 0666 /dev/accel
-    chmod 0666 /dev/akm8973_aot
-    chmod 0666 /dev/akm8975_dev
-    chmod 0666 /dev/light
-    chmod 0666 /dev/proximity
-    
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 600000
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 30720
     #write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ondemand
@@ -41,8 +35,6 @@ on boot
 
     chown system system /sys/bus/platform/devices/msm_sdcc.1/polling
     chown system system /sys/bus/platform/devices/msm_sdcc.2/polling
-
-    chmod 0667 /dev/graphics/fb0
 
 service qmuxd /system/bin/qmuxd
 
