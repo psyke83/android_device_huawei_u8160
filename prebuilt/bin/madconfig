@@ -1,12 +1,12 @@
 #!/system/bin/sh
-# MAD Team App2SD (Cyanogen 7)
+# madconfig (Cyanogen 7)
 # by subpsyke
 
 file="/data/local/userinit.d/enableswap"
 
 if [ "$1" = "" ]; then
 	echo ""
-	echo "Usage: mad2sd [option]"
+	echo "Usage: madconfig [option]"
 	echo "Options:"
 	echo ""
 	echo " * swapon  - enable swap"
