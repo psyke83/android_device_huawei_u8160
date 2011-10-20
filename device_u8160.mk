@@ -107,13 +107,6 @@ PRODUCT_COPY_FILES += \
     vendor/huawei/u8160/proprietary/lib/libril-qcril-hook-oem.so:system/lib/libril-qcril-hook-oem.so \
     vendor/huawei/u8160/proprietary/lib/libwms.so:system/lib/libwms.so \
     vendor/huawei/u8160/proprietary/lib/libwmsts.so:system/lib/libwmsts.so
-
-# OEM RPC
-PRODUCT_COPY_FILES += \
-    vendor/huawei/u8160/proprietary/bin/modempre:system/bin/modempre \
-    vendor/huawei/u8160/proprietary/bin/oem_rpc_svc:system/bin/oem_rpc_svc \
-    vendor/huawei/u8160/proprietary/lib/libhwrpc.so:system/lib/libhwrpc.so \
-    vendor/huawei/u8160/proprietary/lib/liboem_rapi.so:system/lib/liboem_rapi.so
     
 # OMX
 PRODUCT_COPY_FILES += \
