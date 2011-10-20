@@ -14,4 +14,6 @@
 # limitations under the License.
 #
 
+ifeq ($(TARGET_BOOTLOADER_BOARD_NAME),u8160)
 include $(call all-named-subdir-makefiles, recovery libaudio libcopybit)
+endif
