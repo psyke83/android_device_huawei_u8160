@@ -138,6 +138,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/etc/AudioFilter.csv:system/etc/AudioFilter.csv \
     device/huawei/u8160/prebuilt/etc/AudioFilterU8160.csv:system/etc/AudioFilterU8160.csv \
+    device/huawei/u8160/prebuilt/etc/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt \
     device/huawei/u8160/prebuilt/etc/01_qc.cfg:system/etc/01_qc.cfg \
     vendor/huawei/u8160/proprietary/lib/libaudioeq.so:system/lib/libaudioeq.so
 
