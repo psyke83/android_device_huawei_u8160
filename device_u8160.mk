@@ -164,35 +164,6 @@ PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/etc/init.d/02madteam:system/etc/init.d/02madteam \
     device/huawei/u8160/prebuilt/etc/init.d/05mountsd:system/etc/init.d/05mountsd
 
-# Additions to build.prop
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.execution-mode=int:jit \
-    dalvik.vm.heapsize=24m \
-    persist.sys.use_16bpp_alpha=1 \
-    persist.sys.use_dithering=0 \
-    persist.sys.purgeable_assets=1 \
-    ring.delay=0 \
-    rild.libargs=-d/dev/smd0 \
-    rild.libpath=/system/lib/libril-qc-1.so \
-    ro.com.android.dataroaming=false \
-    ro.com.google.locationfeatures=0 \
-    ro.compcache.default=18 \
-    ro.media.dec.jpeg.memcap=20000000 \
-    ro.opengles.version=65537 \
-    ro.sf.lcd_density=120 \
-    ro.telephony.default_network=0 \
-    ro.telephony.call_ring.delay=0 \
-    ro.telephony.call_ring.multiple=false \
-    ro.tether.denied=false \
-    ro.vold.umsdirtyratio=20 \
-    sys.checkfs.fat=false \
-    view.fading_edge_length=8 \
-    view.minimum_fling_velocity=25 \
-    view.scroll_friction=0.008 \
-    view.touch_slop=15 \
-    wifi.interface=eth0 \
-    wifi.supplicant_scan_interval=60
-
 $(call inherit-product, build/target/product/full_base.mk)
 
 # Inherit some common cyanogenmod stuff.
@@ -217,6 +188,56 @@ PRODUCT_PACKAGE_OVERLAYS += vendor/cyanogen/overlay/ldpi
 PRODUCT_COPY_FILES += \
     vendor/cyanogen/prebuilt/ldpi/media/bootanimation.zip:system/media/bootanimation.zip
 
+# Enable Google-specific location features,
+# like NetworkLocationProvider and LocationCollector
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.com.google.locationfeatures=1 \
+    ro.com.google.networklocation=1
+
+# Extended JNI checks
+# The extended JNI checks will cause the system to run more slowly, but they can spot a variety of nasty bugs 
+# before they have a chance to cause problems.
+# Default=true for development builds, set by android buildsystem.
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.kernel.android.checkjni=0 \
+    dalvik.vm.checkjni=false
+
+# RIL properties
+PRODUCT_PROPERTY_OVERRIDES += \
+    rild.libargs=-d/dev/smd0 \
+    rild.libpath=/system/lib/libril-qc-1.so \
+    ro.telephony.default_network=0 \
+    ro.telephony.call_ring.delay=0 \
+    ro.telephony.call_ring.multiple=false
+
+# Networking properties
+PRODUCT_PROPERTY_OVERRIDES += \
+    wifi.interface=eth0 \
+    wifi.supplicant_scan_interval=60
+
+# Performance & graphics properties
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.heapsize=24m \
+    persist.sys.purgeable_assets=1 \
+    persist.sys.use_16bpp_alpha=1 \
+    persist.sys.use_dithering=0 \
+    ro.media.dec.jpeg.memcap=20000000 \
+    ro.opengles.version=65537 \
+    ro.sf.lcd_density=120
+    ro.vold.umsdirtyratio=20
+
+# Touchscreen properties
+PRODUCT_PROPERTY_OVERRIDES += \
+    view.fading_edge_length=8 \
+    view.minimum_fling_velocity=25 \
+    view.scroll_friction=0.008 \
+    view.touch_slop=15
+
+# Compcache properties
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.compcache.default=18
+
+# Override product version
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.modversion=CyanogenMod-7.1.0-MADTEAM
 
