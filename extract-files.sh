@@ -1,7 +1,24 @@
 #!/bin/sh
-# Extract prebuilt libraries (from a working device) needed for the U8160
 
-mkdir -p ../../../vendor/huawei/u8160/proprietary
+# Copyright (C) 2010 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSu8150E-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Extract prebuilt libraries (from a CM7 running device) needed for the U8150
+
+DEVICE=u8160
+
+mkdir -p ../../../vendor/huawei/$DEVICE/proprietary
 
 DIRS="
 bin
@@ -9,7 +26,7 @@ lib/hw
 "
 
 for DIR in $DIRS; do
-	mkdir -p ../../../vendor/huawei/u8160/proprietary/$DIR
+	mkdir -p ../../../vendor/huawei/$DEVICE/proprietary/$DIR
 done
 
 FILES="
@@ -17,8 +34,6 @@ bin/akmd2
 bin/akmd8962
 bin/akmd8975
 bin/brcm_patchram_plus
-bin/modempre
-bin/oem_rpc_svc
 bin/qmuxd
 bin/rild
 
@@ -34,7 +49,6 @@ lib/libdsm.so
 lib/libdss.so
 lib/libgsdi_exp.so
 lib/libgstk_exp.so
-lib/libhwrpc.so
 lib/libmm-adspsvc.so
 lib/libmmgsdilib.so
 lib/libmmipl.so
@@ -42,7 +56,6 @@ lib/libmmjpeg.so
 lib/libmm-omxcore.so
 lib/libmmprocess.so
 lib/libnv.so
-lib/liboem_rapi.so
 lib/libOmxCore.so
 lib/libOmxH264Dec.so
 lib/libOmxMpeg4Dec.so
@@ -61,7 +74,7 @@ lib/libwmsts.so
 "
 
 for FILE in $FILES; do
-    adb pull system/$FILE ../../../vendor/huawei/u8160/proprietary/$FILE
+    adb pull system/$FILE ../../../vendor/huawei/$DEVICE/proprietary/$FILE
 done
 
-chmod 755 ../../../vendor/huawei/u8160/proprietary/bin/* 
+chmod 755 ../../../vendor/huawei/$DEVICE/proprietary/bin/* 
