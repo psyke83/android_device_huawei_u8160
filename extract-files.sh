@@ -147,6 +147,7 @@ PRODUCT_COPY_FILES += \\
     vendor/huawei/__DEVICE__/proprietary/lib/libqcamera.so:system/lib/libqcamera.so \\
     vendor/huawei/__DEVICE__/proprietary/lib/libqmi.so:system/lib/libqmi.so \\
     vendor/huawei/__DEVICE__/proprietary/lib/libqueue.so:system/lib/libqueue.so \\
+    vendor/huawei/__DEVICE__/proprietary/lib/libril.so:system/lib/libril.so \\
     vendor/huawei/__DEVICE__/proprietary/lib/libril-qc-1.so:system/lib/libril-qc-1.so \\
     vendor/huawei/__DEVICE__/proprietary/lib/libril-qcril-hook-oem.so:system/lib/libril-qcril-hook-oem.so \\
     vendor/huawei/__DEVICE__/proprietary/lib/libwms.so:system/lib/libwms.so \\
