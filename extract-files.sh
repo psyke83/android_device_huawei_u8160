@@ -30,6 +30,7 @@ done
 
 FILES="
 etc/01_qc.cfg
+etc/AudioFilterU8160.csv
 etc/pvplayer.cfg
 etc/bluetooth/BCM4329.hcd
 
@@ -102,6 +103,7 @@ chmod 755 ../../../vendor/huawei/$DEVICE/proprietary/bin/*
 # All the blobs necessary for U8160
 PRODUCT_COPY_FILES += \\
     vendor/huawei/__DEVICE__/proprietary/etc/01_qc.cfg:system/etc/01_qc.cfg \\
+    vendor/huawei/__DEVICE__/proprietary/etc/AudioFilterU8160.csv:system/etc/AudioFilterU8160.csv \\
     vendor/huawei/__DEVICE__/proprietary/etc/pvplayer.cfg:system/etc/pvplayer.cfg \\
     vendor/huawei/__DEVICE__/proprietary/etc/bluetooth/BCM4329.hcd:system/etc/bluetooth/BCM4329.hcd
 
