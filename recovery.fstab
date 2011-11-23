@@ -7,7 +7,6 @@
 /cache      	yaffs2      cache
 /data       	yaffs2      userdata
 /datadata      	yaffs2      userdata2
-/cust      	yaffs2      cust
-
+/cust		yaffs2      cust
 /sd-ext         ext4        /dev/block/mmcblk0p2
 /sdcard     	vfat        /dev/block/mmcblk0p1    /dev/block/mmcblk0
