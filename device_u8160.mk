@@ -49,7 +49,7 @@ PRODUCT_COPY_FILES += \
 
 # Keys
 PRODUCT_COPY_FILES += \
-    device/huawei/u8160/prebuilt/qwerty.kl:system/usr/keylayout/qwerty.kl
+    device/huawei/u8160/prebuilt/usr/keylayout/qwerty.kl:system/usr/keylayout/qwerty.kl
 
 # Init files
 PRODUCT_COPY_FILES += \
@@ -73,6 +73,10 @@ PRODUCT_COPY_FILES += \
 # Compcache
 PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/modules/ramzswap.ko:system/lib/modules/ramzswap.ko
+
+# Touchscreen
+PRODUCT_COPY_FILES += \
+    device/huawei/u8160/prebuilt/usr/idc/synaptics.idc:system/usr/idc/synaptics.idc
 
 # Other
 PRODUCT_COPY_FILES += \
