@@ -65,6 +65,9 @@ BOARD_USE_USB_MASS_STORAGE_SWITCH := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/msm_hsusb/gadget/lun"
 BOARD_UMS_LUNFILE := "/sys/devices/platform/msm_hsusb/gadget/lun0/file"
 
+# Touchscreen
+BOARD_USE_LEGACY_TOUCHSCREEN := true
+
 # Sensors
 TARGET_USES_OLD_LIBSENSORS_HAL := true
 
