@@ -19,6 +19,7 @@
 /dev/proximity		0640		system		system
 /dev/rtc0		0660		system		radio
 /dev/rtc1		0660		system		radio
+/dev/ttyHS0		0600		bluetooth	bluetooth
 /dev/video20		0660		system		camera
 
 
