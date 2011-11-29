@@ -1,3 +1,10 @@
+on fs
+    export EXTERNAL_STORAGE /mnt/sdcard
+	mkdir /mnt 0775 root system
+    mkdir /mnt/sdcard 0000 system system
+    # for backwards compatibility
+    symlink /mnt/sdcard /sdcard
+
 on post-fs
 
     mkdir /data/misc/wifi/sockets 0770 wifi wifi    
