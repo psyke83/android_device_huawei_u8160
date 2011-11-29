@@ -29,15 +29,15 @@ write /sys/class/graphics/fb0/state 1
 service qmuxd /system/bin/qmuxd
     class main
 
-service hciattach /system/bin/brcm_patchram_plus \
-	--enable_hci --enable_lpm --baudrate 3000000 \
-	--patchram /system/etc/bluetooth/BCM4329.hcd \
-	/dev/ttyHS0
-    user bluetooth
-    group qcom_oncrpc bluetooth net_bt_admin system
-    disabled
-    oneshot
-    
+service hciattach /system/bin/brcm_patchram_plus --enable_hci --no2bytes --enable_lpm \
+	--tosleep 50000 --baudrate 3000000 --use_baudrate_for_download --i2s=1,1,0,1 \
+	--patchram /system/etc/bluetooth/BCM4329.hcd /dev/ttyHS0
+	class main
+	user bluetooth
+	group bluetooth net_bt_admin
+	disabled
+	oneshot
+
 service wpa_supplicant /system/bin/wpa_supplicant -Dwext -ieth0 -c /data/misc/wifi/wpa_supplicant.conf
     class main
     socket wpa_eth0 dgram 660 wifi wifi
