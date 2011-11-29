@@ -16,14 +16,16 @@
 DEVICE_PACKAGE_OVERLAYS += device/huawei/u8160/overlay
 
 PRODUCT_PACKAGES += \
+    audio.primary.msm7k \
+    audio_policy.msm7k \
+    com.android.future.usb.accessory \
+    FileManager \
+    Gallery \
     libOmxCore \
     libOmxVidEnc \
-    Gallery \
-    gps.u8160 \
-    copybit.u8160 \
     lights.msm7k \
-    screencap \
-    rzscontrol
+    rzscontrol \
+    screencap
 
 # Recovery tools
 PRODUCT_PACKAGES += \
@@ -68,7 +70,7 @@ PRODUCT_COPY_FILES += \
 # Audio
 PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/etc/AudioFilter.csv:system/etc/AudioFilter.csv \
-    device/huawei/u8160/prebuilt/etc/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt \
+    device/huawei/u8160/prebuilt/etc/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt
 
 # Compcache
 PRODUCT_COPY_FILES += \
@@ -119,7 +121,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.use_dithering=0 \
     ro.media.dec.jpeg.memcap=20000000 \
     ro.opengles.version=65537 \
-    ro.sf.lcd_density=120
+    ro.sf.lcd_density=120 \
     ro.vold.umsdirtyratio=20
 
 # Touchscreen properties
