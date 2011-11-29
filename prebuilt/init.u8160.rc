@@ -27,6 +27,7 @@ write /sys/class/graphics/fb0/state 1
     chown system system /sys/bus/platform/devices/msm_sdcc.2/polling
 
 service qmuxd /system/bin/qmuxd
+    class main
 
 service hciattach /system/bin/brcm_patchram_plus \
 	--enable_hci --enable_lpm --baudrate 3000000 \
@@ -38,36 +39,43 @@ service hciattach /system/bin/brcm_patchram_plus \
     oneshot
     
 service wpa_supplicant /system/bin/wpa_supplicant -Dwext -ieth0 -c /data/misc/wifi/wpa_supplicant.conf
+    class main
     socket wpa_eth0 dgram 660 wifi wifi
     group system wifi inet dhcp
     disabled
     oneshot 
 
 service dhcpcd_eth0 /system/bin/dhcpcd -ABKL
+    class main
     disabled
     oneshot
 
 service iprenew_eth0 /system/bin/dhcpcd -n
+    class main
     disabled
     oneshot
 
-service akmd /system/bin/akmd2 
+service akmd /system/bin/akmd2
+    class main
     user compass
     group compass misc input
     disabled
 
 service akm8975 /system/bin/akmd8975
+    class main
     user compass
     group compass misc input
     disabled
 
 service akm8962 /system/bin/akmd8962
+    class main
     user compass
     group compass misc input
     disabled
 
 # bugreport is triggered by the KEY_VOLUMEUP and KEY_CENTER keycodes
 service bugreport /system/bin/dumpstate -d -v -o /sdcard/bugreports/bugreport
+    class main
     disabled
     oneshot
     keycodes 115 232
