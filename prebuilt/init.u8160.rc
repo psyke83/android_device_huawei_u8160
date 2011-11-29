@@ -41,7 +41,7 @@ service hciattach /system/bin/brcm_patchram_plus --enable_hci --no2bytes --enabl
 service wpa_supplicant /system/bin/wpa_supplicant -Dwext -ieth0 -c /data/misc/wifi/wpa_supplicant.conf
     class main
     socket wpa_eth0 dgram 660 wifi wifi
-    group system wifi inet dhcp
+    #group system wifi inet dhcp
     disabled
     oneshot 
 
