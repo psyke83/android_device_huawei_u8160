@@ -103,9 +103,9 @@ static uint32_t SND_DEVICE_NO_MIC_HEADSET=-1;
 
 AudioHardware::AudioHardware() :
     mInit(false), mMicMute(true), mBluetoothNrec(true), mBluetoothId(0),
-    mOutput(0), mSndEndpoints(NULL), mCurSndDevice(-1), mDualMicEnabled(false),  mBuiltinMicSelected(false)
+    mOutput(0), mSndEndpoints(NULL), mCurSndDevice(-1), mDualMicEnabled(false), mBuiltinMicSelected(false)
 #ifdef HAVE_FM_RADIO
-	,mFmRadioEnabled(false)
+    ,mFmRadioEnabled(false)
 #endif
 {
    if (get_audpp_filter() == 0) {
@@ -1426,7 +1426,9 @@ status_t AudioHardware::doRouting(AudioStreamInMSM72xx *input)
             new_snd_device = SND_DEVICE_HANDSET;
             new_post_proc_feature_mask = (ADRC_ENABLE | EQ_ENABLE | RX_IIR_ENABLE | MBADRC_ENABLE);
         }
+#ifdef HAVE_FM_RADIO
     }
+#endif
     if (mDualMicEnabled && mMode == AudioSystem::MODE_IN_CALL) {
         if (new_snd_device == SND_DEVICE_HANDSET) {
             LOGI("Routing audio to handset with DualMike enabled\n");
