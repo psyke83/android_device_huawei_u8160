@@ -104,7 +104,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Networking properties
 PRODUCT_PROPERTY_OVERRIDES += \
-    wifi.interface=eth0 \
+    wifi.interface=wlan0 \
     wifi.supplicant_scan_interval=60
 
 # Performance & graphics properties
