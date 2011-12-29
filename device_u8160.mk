@@ -16,14 +16,15 @@
 DEVICE_PACKAGE_OVERLAYS += device/huawei/u8160/overlay
 
 PRODUCT_PACKAGES += \
-    libOmxCore \
-    libOmxVidEnc \
+    copybit.u8160 \
     Gallery \
     gps.u8160 \
-    copybit.u8160 \
+    gralloc.msm7k \
+    libOmxCore \
+    libOmxVidEnc \
     lights.msm7k \
-    screencap \
-    rzscontrol
+    rzscontrol \
+    screencap
 
 # Recovery tools
 PRODUCT_PACKAGES += \
@@ -68,7 +69,7 @@ PRODUCT_COPY_FILES += \
 # Audio
 PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/etc/AudioFilter.csv:system/etc/AudioFilter.csv \
-    device/huawei/u8160/prebuilt/etc/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt \
+    device/huawei/u8160/prebuilt/etc/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt
 
 # Compcache
 PRODUCT_COPY_FILES += \
@@ -113,9 +114,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.purgeable_assets=1 \
     persist.sys.use_16bpp_alpha=1 \
     persist.sys.use_dithering=0 \
+    ro.config.PicMaxSize=3mp \
     ro.media.dec.jpeg.memcap=20000000 \
     ro.opengles.version=65537 \
-    ro.sf.lcd_density=120
+    ro.sf.lcd_density=120 \
     ro.vold.umsdirtyratio=20
 
 # Touchscreen properties
@@ -130,9 +132,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.compcache.default=18
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
-	LOCAL_KERNEL := device/huawei/u8160/prebuilt/kernel
+    LOCAL_KERNEL := device/huawei/u8160/prebuilt/kernel
 else
-	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+    LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 endif
 
 PRODUCT_COPY_FILES += \
