@@ -42,6 +42,8 @@
 						struct mdp_overlay)
 #define MSMFB_OVERLAY_PLAY_ENABLE     _IOW(MSMFB_IOCTL_MAGIC, 141, unsigned int)
 
+#define MSMFB_SET_DISPLAY_CONTRAST _IOW(MSMFB_IOCTL_MAGIC, 135, unsigned int)
+
 #define MDP_IMGTYPE2_START 0x10000
 
 enum {
@@ -191,5 +193,12 @@ struct mdp_histogram {
 struct mdp_page_protection {
 	uint32_t page_protection;
 };
+
+#ifdef __KERNEL__
+
+/* get the framebuffer physical address information */
+int get_fb_phys_info(unsigned long *start, unsigned long *len, int fb_num);
+
+#endif
 
 #endif /*_MSM_MDP_H_*/
