@@ -93,7 +93,7 @@ WIFI_DRIVER_FW_STA_PATH := "/system/wifi/firmware.bin"
 WIFI_DRIVER_MODULE_ARG := "firmware_path=/system/wifi/firmware.bin nvram_path=/system/wifi/nvram.txt iface_name=wlan"
 WIFI_DRIVER_MODULE_NAME := "dhd"
 WIFI_DRIVER_MODULE_PATH := "/wifi/dhd.ko"
-WPA_SUPPLICANT_VERSION := VER_0_5_X
+WPA_SUPPLICANT_VERSION := VER_0_6_X
 
 # Kernel
 BOARD_KERNEL_BASE := 0x00208000
