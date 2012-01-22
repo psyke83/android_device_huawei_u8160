@@ -5,6 +5,7 @@ on post-fs
    
 on boot
     
+    setprop ro.bt.bdaddr_path /data/misc/bluetooth/bdaddr
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
     chmod 0660                /sys/class/rfkill/rfkill0/state

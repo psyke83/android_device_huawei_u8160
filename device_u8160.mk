@@ -55,7 +55,8 @@ PRODUCT_COPY_FILES += \
 # Init files
 PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/init.u8160.rc:root/init.u8160.rc \
-    device/huawei/u8160/prebuilt/ueventd.huawei.rc:root/ueventd.huawei.rc
+    device/huawei/u8160/prebuilt/ueventd.huawei.rc:root/ueventd.huawei.rc \
+    device/huawei/u8160/prebuilt/etc/init.d/02getmacaddrs:system/etc/init.d/02getmacaddrs
 
 # Wi-Fi related
 PRODUCT_COPY_FILES += \
@@ -74,6 +75,10 @@ PRODUCT_COPY_FILES += \
 # Compcache
 PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/ramzswap.ko:system/lib/modules/ramzswap.ko
+
+# Bluetooth
+PRODUCT_COPY_FILES += \
+    device/huawei/u8160/prebuilt/bin/brcm_patchram_plus:system/bin/brcm_patchram_plus
 
 # Other
 PRODUCT_COPY_FILES += \

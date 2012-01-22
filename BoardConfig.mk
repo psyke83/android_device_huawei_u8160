@@ -90,7 +90,7 @@ BOARD_HAS_LIMITED_EGL := true
 BOARD_WPA_SUPPLICANT_DRIVER := WEXT
 WIFI_DRIVER_FW_AP_PATH := "/system/wifi/firmware_apsta.bin"
 WIFI_DRIVER_FW_STA_PATH := "/system/wifi/firmware.bin"
-WIFI_DRIVER_MODULE_ARG := "firmware_path=/system/wifi/firmware.bin nvram_path=/system/wifi/nvram.txt iface_name=wlan"
+WIFI_DRIVER_MODULE_ARG := "firmware_path=/system/wifi/firmware.bin nvram_path=/data/misc/wifi/nvram.txt iface_name=wlan"
 WIFI_DRIVER_MODULE_NAME := "dhd"
 WIFI_DRIVER_MODULE_PATH := "/wifi/dhd.ko"
 WPA_SUPPLICANT_VERSION := VER_0_6_X

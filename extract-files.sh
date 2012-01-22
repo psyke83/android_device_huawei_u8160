@@ -37,7 +37,6 @@ etc/bluetooth/BCM4329.hcd
 bin/akmd2
 bin/akmd8962
 bin/akmd8975
-bin/brcm_patchram_plus
 bin/qmuxd
 bin/rild
 
@@ -111,7 +110,6 @@ PRODUCT_COPY_FILES += \\
     vendor/huawei/__DEVICE__/proprietary/bin/akmd2:system/bin/akmd2 \\
     vendor/huawei/__DEVICE__/proprietary/bin/akmd8962:system/bin/akmd8962 \\
     vendor/huawei/__DEVICE__/proprietary/bin/akmd8975:system/bin/akmd8975 \\
-    vendor/huawei/__DEVICE__/proprietary/bin/brcm_patchram_plus:system/bin/brcm_patchram_plus \\
     vendor/huawei/__DEVICE__/proprietary/bin/qmuxd:system/bin/qmuxd \\
     vendor/huawei/__DEVICE__/proprietary/bin/rild:system/bin/rild
 

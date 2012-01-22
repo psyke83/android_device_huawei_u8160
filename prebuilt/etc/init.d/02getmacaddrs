@@ -1,0 +1,18 @@
+#!/system/bin/sh
+# /system/etc/init.d/02getmacaddrs
+# by subpsyke
+#
+# This script will write the Bluetooth and Wifi MAC addresses for the Huawei U8160 (and possibly other models)
+
+RAWUSBMAC=`cat /sys/module/g_android/parameters/serial_number | tr '[A-Z]' '[a-z]'`
+USBMAC=`echo $RAWUSBMAC | sed 's!^M$!!;s!\-!!g;s!\.!!g;s!\(..\)!\1:!g;s!:$!!'`
+STARTMAC=`echo $USBMAC | cut -d ":" -f 1,2,3,4,5`":"
+LASTUSBMAC=`echo $USBMAC | cut -d ":" -f 6`
+LASTWIFIMAC=`printf '%x\n' $((0x$LASTUSBMAC + 1))`
+LASTBTMAC=`printf '%x\n' $((0x$LASTUSBMAC + 2))`
+WIFIMAC=$STARTMAC$LASTWIFIMAC
+BTMAC=$STARTMAC$LASTBTMAC
+cat /system/wifi/nvram.txt | sed -e s/00:90:4c:14:43:29/$WIFIMAC/g >/data/misc/wifi/nvram.txt
+echo $BTMAC >/data/misc/bluetooth/bdaddr
+
+exit
