@@ -119,7 +119,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.purgeable_assets=1 \
     persist.sys.use_16bpp_alpha=1 \
     persist.sys.use_dithering=1 \
-    ro.config.PicMaxSize=3mp \
     ro.media.dec.jpeg.memcap=20000000 \
     ro.opengles.version=65537 \
     ro.sf.lcd_density=120 \
@@ -134,7 +133,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Compcache properties
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.compcache.default=18
+    ro.compcache.default=10
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
     LOCAL_KERNEL := device/huawei/u8160/prebuilt/kernel
