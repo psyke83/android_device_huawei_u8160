@@ -78,6 +78,7 @@ PRODUCT_COPY_FILES += \
 
 # Bluetooth
 PRODUCT_COPY_FILES += \
+    device/huawei/u8160/prebuilt/etc/bluetooth/audio.conf:system/etc/bluetooth/audio.conf \
     device/huawei/u8160/prebuilt/bin/brcm_patchram_plus:system/bin/brcm_patchram_plus
 
 # Other
