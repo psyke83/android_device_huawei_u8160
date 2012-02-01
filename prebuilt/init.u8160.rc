@@ -4,7 +4,7 @@ on post-fs
     mkdir /data/misc/dhcp 0770 dhcp dhcp
    
 on boot
-    
+
     setprop ro.bt.bdaddr_path /data/misc/bluetooth/bdaddr
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
@@ -13,7 +13,7 @@ on boot
     chmod 0660 /proc/bluetooth/sleep/proto
 
     # Increase read throughput from sd card
-    write /sys/block/mmcblk0/bdi/read_ahead_kb 2048
+    write /sys/block/mmcblk0/bdi/read_ahead_kb 256
 
     chmod 0777 /sys/kernel/logger/log_events/enable
     chmod 0777 /sys/kernel/logger/log_main/enable
