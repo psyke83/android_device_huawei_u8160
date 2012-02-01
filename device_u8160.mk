@@ -74,7 +74,7 @@ PRODUCT_COPY_FILES += \
 
 # Compcache
 PRODUCT_COPY_FILES += \
-    device/huawei/u8160/prebuilt/ramzswap.ko:system/lib/modules/ramzswap.ko
+    device/huawei/u8160/prebuilt/modules/ramzswap.ko:system/lib/modules/ramzswap.ko
 
 # Bluetooth
 PRODUCT_COPY_FILES += \
