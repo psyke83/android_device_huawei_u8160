@@ -16,7 +16,7 @@
 DEVICE_PACKAGE_OVERLAYS += device/huawei/u8160/overlay
 
 PRODUCT_PACKAGES += \
-    copybit.u8160 \
+    copybit.msm7k \
     Gallery \
     gps.u8160 \
     gralloc.msm7k \
