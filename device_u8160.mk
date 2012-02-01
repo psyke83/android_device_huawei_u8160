@@ -119,6 +119,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heapsize=24m \
     persist.sys.purgeable_assets=1 \
     persist.sys.rotationanimation=0 \
+    persist.sys.scrollingcache=3 \
     persist.sys.use_16bpp_alpha=1 \
     persist.sys.use_dithering=1 \
     ro.media.dec.jpeg.memcap=20000000 \
