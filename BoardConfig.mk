@@ -22,6 +22,8 @@ USE_CAMERA_STUB := false
 # inherit from the proprietary version
 -include vendor/huawei/u8160/BoardConfigVendor.mk
 
+TARGET_SPECIFIC_HEADER_PATH := device/huawei/u8160/include
+
 # Camera
 BOARD_USE_FROYO_LIBCAMERA := true
 
