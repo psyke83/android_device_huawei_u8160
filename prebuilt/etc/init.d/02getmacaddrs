@@ -1,18 +1,48 @@
 #!/system/bin/sh
-# /system/etc/init.d/02getmacaddrs
-# by subpsyke
+# 02getmacaddrs
+# by psyke83
 #
 # This script will write the Bluetooth and Wifi MAC addresses for the Huawei U8160 (and possibly other models)
 
-RAWUSBMAC=`cat /sys/module/g_android/parameters/serial_number | tr '[A-Z]' '[a-z]'`
-USBMAC=`echo $RAWUSBMAC | sed 's!^M$!!;s!\-!!g;s!\.!!g;s!\(..\)!\1:!g;s!:$!!'`
-STARTMAC=`echo $USBMAC | cut -d ":" -f 1,2,3,4,5`":"
-LASTUSBMAC=`echo $USBMAC | cut -d ":" -f 6`
-LASTWIFIMAC=`printf '%x\n' $((0x$LASTUSBMAC + 1))`
-LASTBTMAC=`printf '%x\n' $((0x$LASTUSBMAC + 2))`
-WIFIMAC=$STARTMAC$LASTWIFIMAC
-BTMAC=$STARTMAC$LASTBTMAC
-cat /system/wifi/nvram.txt | sed -e s/00:90:4c:14:43:29/$WIFIMAC/g >/data/misc/wifi/nvram.txt
-echo $BTMAC >/data/misc/bluetooth/bdaddr
+# grab the usb serial in lower case format
+usbserial=`cat /sys/module/g_android/parameters/serial_number | tr '[A-Z]' '[a-z]'`
+
+# convert to mac address block format
+usbmac=`echo $usbserial | sed 's!^M$!!;s!\-!!g;s!\.!!g;s!\(..\)!\1:!g;s!:$!!'`
+# get first 5 mac address blocks
+firstpart=`echo $usbmac | cut -d ":" -f 1,2,3,4,5`":"
+# get final mac address block
+lastpart=`echo $usbmac | cut -d ":" -f 6`
+
+# calculate wifi final mac block (lastpart + 1)
+wifipart=`printf '%x\n' $((0x$lastpart + 1))`
+if [ `expr length "$wifipart"` -eq 3 ]; then
+    wifipart=`printf '%x\n' $((0x$wifipart - 0xFF))`
+fi
+if [ `expr length "$wifipart"` -eq 1 ]; then
+    wifipart=0$wifipart
+fi
+
+# calculate bt final mac block (lastpart + 2)
+btpart=`printf '%x\n' $((0x$lastpart + 2))`
+if [ `expr length "$btpart"` -eq 3 ]; then
+    btpart=`printf '%x\n' $((0x$btpart - 0xFF))`
+fi
+if [ `expr length "$btpart"` -eq 1 ]; then
+    btpart=0$btpart
+fi
+
+# put the parts together
+wifimac=$firstpart$wifipart
+btmac=$firstpart$btpart
+
+# echo results
+echo "usbmac="$usbmac
+echo "wifimac="$wifimac
+echo "btmac="$btmac
+
+# write the addresses to the appropriate configuration files
+cat /system/wifi/nvram.txt | sed -e s/00:90:4c:14:43:29/$wifimac/g >/data/misc/wifi/nvram.txt
+echo $btmac >/data/misc/bluetooth/bdaddr
 
 exit
