@@ -19,7 +19,6 @@ PRODUCT_PACKAGES += \
     copybit.msm7k \
     Gallery \
     gps.u8160 \
-    gralloc.msm7k \
     libOmxCore \
     libOmxVidEnc \
     lights.msm7k \

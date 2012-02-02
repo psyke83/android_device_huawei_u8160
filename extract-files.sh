@@ -41,6 +41,7 @@ bin/akmd8975
 bin/qmuxd
 bin/rild
 
+lib/hw/gralloc.default.so
 lib/hw/sensors.default.so
 
 lib/libaudioeq.so
@@ -114,6 +115,7 @@ PRODUCT_COPY_FILES += \\
     vendor/__MANUFACTURER__/__DEVICE__/proprietary/bin/rild:system/bin/rild
 
 PRODUCT_COPY_FILES += \\
+    vendor/__MANUFACTURER__/__DEVICE__/proprietary/lib/hw/gralloc.msm7k.so:system/lib/hw/gralloc.msm7k.so \\
     vendor/__MANUFACTURER__/__DEVICE__/proprietary/lib/hw/sensors.default.so:system/lib/hw/sensors.default.so
 
 PRODUCT_COPY_FILES += \\
