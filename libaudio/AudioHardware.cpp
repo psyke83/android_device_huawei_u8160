@@ -418,7 +418,8 @@ status_t AudioHardware::setParameters(const String8& keyValuePairs)
         if(mMode != AudioSystem::MODE_IN_CALL){
            return NO_ERROR;
         }
-        doRouting(NULL);
+    } else {
+	mTtyMode = TTY_OFF;
     }
 
 #ifdef HAVE_FM_RADIO
@@ -1136,7 +1137,7 @@ status_t AudioHardware::setVoiceVolume(float v)
         v = 1.0;
     }
 
-    int vol = lrint(v * 6.0) + 1;
+    int vol = lrint(v * 7.0);
     LOGD("setVoiceVolume(%f)\n", v);
     LOGI("Setting in-call volume to %d (available range is 0 to 7)\n", vol);
 
