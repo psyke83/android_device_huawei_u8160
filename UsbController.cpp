@@ -55,16 +55,16 @@ int UsbController::enableRNDIS(bool enable) {
 
 	char value[20];
 	int fd = open("/sys/module/g_android/parameters/product_id", O_RDWR);
-	int count = snprintf(value, sizeof(value), "%s\n", (enable ? "1039" : "1038"));
+	int count = snprintf(value, sizeof(value), "%d\n", (enable ? 1039 : 1038));
 	write(fd, value, count);
 	close(fd);
 	return 0;
 }
 
 bool UsbController::isRNDISStarted() {
-    char value[5];
-    int fd = open("/sys/module/g_android/parameters/product_id", O_RDONLY);
-    read(fd, &value, 5);
+    char value=0;
+    int fd = open("/sys/devices/platform/android_usb/functions/rndis", O_RDWR);
+    read(fd, &value, 1);
     close(fd);
-    return (!strncmp(value,"1039",4) ? true : false);
+    return (value == '1' ? true : false);
 }

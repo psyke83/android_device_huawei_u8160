@@ -11,29 +11,56 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
+
+# proprietary side of the device
+$(call inherit-product-if-exists, vendor/huawei/u8160/u8160-vendor.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/huawei/u8160/overlay
+DEVICE_PACKAGE_OVERLAYS += device/huawei/u8160/ldpi
+PRODUCT_PACKAGE_OVERLAYS += vendor/cm/overlay/ldpi
 
-PRODUCT_PACKAGES += \
-    audio.primary.msm7k \
-    audio_policy.msm7k \
-    com.android.future.usb.accessory \
-    FileManager \
-    Gallery \
-    libOmxCore \
-    libOmxVidEnc \
-    lights.msm7k \
-    rzscontrol \
-    screencap
+# Discard inherited values and use our own instead.
+PRODUCT_NAME := huawei_u8160
+PRODUCT_DEVICE := u8160
+PRODUCT_MODEL := Huawei U8160
 
-# Recovery tools
+# Graphics 
 PRODUCT_PACKAGES += \
-    flash_image \
-    dump_image \
-    erase_image \
-    make_ext4fs \
-    e2fsck
+    gralloc.u8160 \
+    copybit.u8160
+
+# Audio
+PRODUCT_PACKAGES += \
+    audio_policy.u8160 \
+    audio.primary.u8160 \
+    audio.a2dp.default
+
+# Zram
+PRODUCT_PACKAGES += \
+    hwprops \
+    rzscontrol
+
+# Video decoding
+PRODUCT_PACKAGES += \
+    libstagefrighthw \
+    libopencorehw \
+    libmm-omxcore \
+    libOmxCore
+
+# Apps
+PRODUCT_PACKAGES += \
+    Gallery2
+
+# Other
+PRODUCT_PACKAGES += \
+    lights.u8160 \
+    gps.u8160
+
+PRODUCT_LOCALES := en_GB
+# LDPI assets
+PRODUCT_LOCALES += ldpi mdpi
+PRODUCT_AAPT_CONFIG := ldpi mdpi
+PRODUCT_AAPT_PREF_CONFIG := ldpi
 
 # Hardware permissions
 PRODUCT_COPY_FILES += \
@@ -49,21 +76,22 @@ PRODUCT_COPY_FILES += \
     frameworks/base/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
     frameworks/base/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
 
-# Keys
+# Vold config
 PRODUCT_COPY_FILES += \
-    device/huawei/u8160/prebuilt/usr/keylayout/qwerty.kl:system/usr/keylayout/qwerty.kl
+    device/huawei/u8160/prebuilt/etc/vold.fstab:system/etc/vold.fstab
 
 # Init files
 PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/init.u8160.rc:root/init.u8160.rc \
+    device/huawei/u8160/prebuilt/init.u8160.usb.rc:root/init.u8160.usb.rc \
     device/huawei/u8160/prebuilt/ueventd.u8160.rc:root/ueventd.u8160.rc
 
 # Wi-Fi related
 PRODUCT_COPY_FILES += \
-    device/huawei/u8160/prebuilt/modules/dhd.ko:root/wifi/dhd.ko \
     device/huawei/u8160/prebuilt/wifi/firmware_apsta.bin:system/wifi/firmware_apsta.bin \
     device/huawei/u8160/prebuilt/wifi/firmware.bin:system/wifi/firmware.bin \
     device/huawei/u8160/prebuilt/wifi/nvram.txt:system/wifi/nvram.txt \
+    device/huawei/u8160/prebuilt/wifi/dhd.ko:root/wifi/dhd.ko \
     device/huawei/u8160/prebuilt/etc/dhcpcd/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
     device/huawei/u8160/prebuilt/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
 
@@ -72,19 +100,34 @@ PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/etc/AudioFilter.csv:system/etc/AudioFilter.csv \
     device/huawei/u8160/prebuilt/etc/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt
 
-# Compcache
+# Kernel modules
+#PRODUCT_COPY_FILES += \
+#    device/huawei/u8160/prebuilt/modules/ramzswap.ko:system/lib/modules/ramzswap.ko
+
+# Bluetooth
 PRODUCT_COPY_FILES += \
-    device/huawei/u8160/prebuilt/modules/ramzswap.ko:system/lib/modules/ramzswap.ko
+    device/huawei/u8160/prebuilt/etc/bluetooth/audio.conf:system/etc/bluetooth/audio.conf \
+    device/huawei/u8160/prebuilt/bin/brcm_patchram_plus:system/bin/brcm_patchram_plus
 
 # Touchscreen
 PRODUCT_COPY_FILES += \
-    device/huawei/u8160/prebuilt/usr/idc/synaptics.idc:system/usr/idc/synaptics.idc
+    device/huawei/u8160/prebuilt/usr/idc/synaptics.idc:system/usr/idc/synaptics.idc \
+    device/huawei/u8160/prebuilt/usr/keylayout/synaptics.kl:system/usr/keylayout/synaptics.kl
 
 # Other
 PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/lib/egl/egl.cfg:system/lib/egl/egl.cfg \
     device/huawei/u8160/prebuilt/etc/sysctl.conf:system/etc/sysctl.conf \
     device/huawei/u8160/prebuilt/etc/vold.fstab:system/etc/vold.fstab
+
+# MADTEAM & ICS HACKS
+PRODUCT_COPY_FILES += \
+    device/huawei/u8160/prebuilt/bin/madconfig:system/bin/madconfig \
+    device/huawei/u8160/prebuilt/etc/init.d/02getmacaddrs:system/etc/init.d/02getmacaddrs \
+    device/huawei/u8160/prebuilt/etc/init.d/02madteam:system/etc/init.d/02madteam \
+    device/huawei/u8160/prebuilt/lib/hw/copybit.msm7x27.so:system/lib/hw/copybit.msm7x27.so \
+    device/huawei/u8160/prebuilt/lib/hw/gralloc.msm7x27.so:system/lib/hw/gralloc.msm7x27.so
+
 
 # Enable Google-specific location features,
 # like NetworkLocationProvider and LocationCollector
@@ -110,7 +153,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Networking properties
 PRODUCT_PROPERTY_OVERRIDES += \
-    wifi.interface=eth0 \
+    wifi.interface=wlan0 \
     wifi.supplicant_scan_interval=60
 
 # Performance & graphics properties
@@ -118,7 +161,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heapsize=24m \
     persist.sys.purgeable_assets=1 \
     persist.sys.use_16bpp_alpha=1 \
-    persist.sys.use_dithering=0 \
+    persist.sys.use_dithering=1 \
     ro.media.dec.jpeg.memcap=20000000 \
     ro.opengles.version=65537 \
     ro.sf.lcd_density=120 \
@@ -133,29 +176,19 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Compcache properties
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.compcache.default=18
+    ro.compcache.default=10
 
-ifeq ($(TARGET_PREBUILT_KERNEL),)
-	LOCAL_KERNEL := device/huawei/u8160/prebuilt/kernel
-else
-	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
-endif
+# NEW ICS properties (may need verification/testing)
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.config_datause_iface=rmnet0 \
+    ro.secure=0 \
+    ro.ril.hsxpa=1 \
+    ro.ril.gprsclass=10 \
+    ro.telephony.ril.v3=icccardstatus,datacall,signalstrength,facilitylock \
+    mobiledata.interfaces=rmnet0,rmnet1,rmnet2 \
+    net.qtaguid_enabled=0 \
+    debug.gr.swapinterval=0 \
+    persist.sys.usb.config=mass_storage,adb \
+    sys.usb.config=mass_storage,adb \
+    persist.service.adb.enable=1
 
-PRODUCT_COPY_FILES += \
-    $(LOCAL_KERNEL):kernel
-
-$(call inherit-product-if-exists, vendor/huawei/u8160/u8160-vendor.mk)
-
-$(call inherit-product, build/target/product/full_base.mk)
-
-# The gps config appropriate for this device
-$(call inherit-product, device/common/gps/gps_eu_supl.mk)
-
-# LDPI assets
-PRODUCT_LOCALES += ldpi mdpi
-
-PRODUCT_NAME := huawei_u8160
-PRODUCT_DEVICE := u8160
-PRODUCT_MODEL := U8160
-PRODUCT_BRAND := huawei
-PRODUCT_MANUFACTURER := huawei

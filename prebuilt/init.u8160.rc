@@ -1,20 +1,20 @@
-on fs
+import init.u8160.usb.rc
+
+on early-init
     export EXTERNAL_STORAGE /mnt/sdcard
-	mkdir /mnt 0775 root system
     mkdir /mnt/sdcard 0000 system system
     # for backwards compatibility
     symlink /mnt/sdcard /sdcard
 
-on post-fs
-
-    mkdir /data/misc/wifi/sockets 0770 wifi wifi    
+on post-fs-data
+    mkdir /data/misc/wifi 0770 wifi wifi
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
     mkdir /data/misc/dhcp 0770 dhcp dhcp
+    chown dhcp dhcp /data/misc/dhcp
    
 on boot
 
-# temporary hack to prevent framebuffer flicker
-write /sys/class/graphics/fb0/state 1
-
+    setprop ro.bt.bdaddr_path /data/misc/bluetooth/bdaddr
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
     chmod 0660                /sys/class/rfkill/rfkill0/state
@@ -22,7 +22,7 @@ write /sys/class/graphics/fb0/state 1
     chmod 0660 /proc/bluetooth/sleep/proto
 
     # Increase read throughput from sd card
-    write /sys/block/mmcblk0/bdi/read_ahead_kb 2048
+    write /sys/block/mmcblk0/bdi/read_ahead_kb 256
 
     chmod 0777 /sys/kernel/logger/log_events/enable
     chmod 0777 /sys/kernel/logger/log_main/enable
@@ -33,31 +33,37 @@ write /sys/class/graphics/fb0/state 1
     chown system system /sys/bus/platform/devices/msm_sdcc.1/polling
     chown system system /sys/bus/platform/devices/msm_sdcc.2/polling
 
+# Temporary hack to prevent framebuffer flicker
+    chmod 0777 /sys/class/graphics/fb0/state
+    write /sys/class/graphics/fb0/state 1
+
 service qmuxd /system/bin/qmuxd
     class main
 
-service hciattach /system/bin/brcm_patchram_plus --enable_hci --no2bytes --enable_lpm \
-	--tosleep 50000 --baudrate 3000000 --use_baudrate_for_download --i2s=1,1,0,1 \
-	--patchram /system/etc/bluetooth/BCM4329.hcd /dev/ttyHS0
+service hciattach /system/bin/brcm_patchram_plus \
+	--enable_hci --enable_lpm --baudrate 3000000 \
+	--patchram /system/etc/bluetooth/BCM4329.hcd \
+	--scopcm=0,0,0,0,0,0,4,0,0,0 \
+	/dev/ttyHS0
 	class main
-	user bluetooth
-	group bluetooth net_bt_admin
-	disabled
-	oneshot
-
-service wpa_supplicant /system/bin/wpa_supplicant -Dwext -ieth0 -c /data/misc/wifi/wpa_supplicant.conf
-    class main
-    socket wpa_eth0 dgram 660 wifi wifi
-    #group system wifi inet dhcp
+    user bluetooth
+    group qcom_oncrpc bluetooth net_bt_admin system
     disabled
-    oneshot 
+    oneshot
+    
+service wpa_supplicant /system/bin/wpa_supplicant -Dwext -iwlan0 -W -c/data/misc/wifi/wpa_supplicant.conf
+    class main
+    #group wifi inet
+    socket wpa_wlan0 dgram 660 wifi wifi
+    disabled
+    oneshot
 
-service dhcpcd_eth0 /system/bin/dhcpcd -ABKL
+service dhcpcd_wlan0 /system/bin/dhcpcd -ABKL
     class main
     disabled
     oneshot
 
-service iprenew_eth0 /system/bin/dhcpcd -n
+service iprenew_wlan0 /system/bin/dhcpcd -n
     class main
     disabled
     oneshot

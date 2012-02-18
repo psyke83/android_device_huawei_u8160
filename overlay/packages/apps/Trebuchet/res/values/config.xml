@@ -1,0 +1,4 @@
+<resources>
+    <bool name="config_hardwareAccelerated">false</bool>
+    <bool name="config_cyanogenmod">true</bool>
+</resources>

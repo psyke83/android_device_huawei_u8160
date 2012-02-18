@@ -37,5 +37,6 @@
              android:storageDescription="@string/storage_internal"
              android:primary="true"
              android:emulated="false"
+             android:removable="true"
              android:allowMassStorage="true" />
 </StorageList>

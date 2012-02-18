@@ -1,0 +1,71 @@
+#!/system/bin/sh
+# madconfig (Cyanogen 7)
+# by subpsyke
+
+swapfile="/data/local/userinit.d/enableswap"
+modelfile="/data/local/userinit.d/enableu8180"
+
+if [ "$1" = "" ]; then
+	echo ""
+	echo "Usage: madconfig [option]"
+	echo "Options:"
+	echo ""
+	echo " * swapon  - enable swap"
+	echo " * swapoff - disable swap"
+	echo " * u8180   - enable U8180 ROM branding"
+	echo " * u8160   - disable U8180 ROM branding"
+	echo ""
+	echo "MAD Team ROM status:"
+	echo ""
+	echo "Swap size:   " `free | grep Swap | awk ' { print ($2) } '`"KB"
+if [ -f $modelfile ]; then
+	echo "ROM branding: U8180"
+else
+	echo "ROM branding: U8160 (default)"
+fi
+	echo ""
+fi
+
+if [ "$(id)" != "uid=0(root) gid=0(root)" ]; then
+	echo "You must run this script as superuser (su)!"
+	echo "Aborting."
+	echo ""
+	exit
+fi
+
+if [ ! -d /data/local/userinit.d ]; then
+	mkdir -m 777 /data/local/userinit.d
+	chown system:system /data/local/userinit.d
+fi
+
+if [ "$1" = "swapon" ]; then
+	echo "swapon /dev/block/mmcblk0p3" >$swapfile
+	chmod +x $swapfile
+	$swapfile
+	echo "Swap enabled! Setting will be kept on reboot."
+fi
+
+if [ "$1" = "swapoff" ]; then
+	rm $swapfile
+	swapoff /dev/block/mmcblk0p3
+	echo "Swap disabled! Setting will be kept on reboot."
+fi
+
+if [ "$1" = "u8180" ]; then
+	echo "if [ `cat /system/build.prop | grep 'ro.product.model='` = 'ro.product.model=U8160' ]; then mount -o remount,rw /system; sleep 2; sed -e 's/ro.product.model=U8160/ro.product.model=U8180/g' -i /system/build.prop; sleep 2; mount -o remount,ro /system; fi" >$modelfile
+	chmod +x $modelfile
+	$modelfile
+	echo "U8180 branding enabled! Setting will be kept on ROM upgrade."
+	echo "Please reboot for changes to take effect."
+fi
+
+if [ "$1" = "u8160" ]; then
+	sleep 2; mount -o remount,rw /system
+	sed -e 's/ro.product.model=U8180/ro.product.model=U8160/g' -i /system/build.prop
+	sleep 2; mount -o remount,ro /system
+	if [ -f $modelfile ]; then rm $modelfile; fi
+	echo "U8160 branding restored."
+	echo "Please reboot for changes to take effect."
+fi
+
+exit
