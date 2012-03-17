@@ -20,4 +20,5 @@
 # In particular, you can add lunch options with the add_lunch_combo
 # function: add_lunch_combo generic-eng
 
+add_lunch_combo cyanogenmod_u8160-eng
 add_lunch_combo generic_u8160-eng

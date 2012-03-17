@@ -71,10 +71,6 @@ PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/etc/AudioFilter.csv:system/etc/AudioFilter.csv \
     device/huawei/u8160/prebuilt/etc/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt
 
-# Compcache
-PRODUCT_COPY_FILES += \
-    device/huawei/u8160/prebuilt/modules/ramzswap.ko:system/lib/modules/ramzswap.ko
-
 # Bluetooth
 PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/etc/bluetooth/audio.conf:system/etc/bluetooth/audio.conf \
@@ -118,7 +114,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heapsize=24m \
     persist.sys.purgeable_assets=1 \
     persist.sys.rotationanimation=0 \
-    persist.sys.scrollingcache=3 \
+    persist.sys.scrollingcache=2 \
     persist.sys.use_16bpp_alpha=1 \
     persist.sys.use_dithering=1 \
     ro.media.dec.jpeg.memcap=20000000 \
@@ -135,7 +131,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Compcache properties
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.compcache.default=26
+    ro.compcache.default=18
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
     LOCAL_KERNEL := device/huawei/u8160/prebuilt/kernel
@@ -151,7 +147,7 @@ $(call inherit-product-if-exists, vendor/huawei/u8160/u8160-vendor.mk)
 $(call inherit-product, build/target/product/full_base.mk)
 
 # The gps config appropriate for this device
-$(call inherit-product, device/common/gps/gps_eu_supl.mk)
+$(call inherit-product, device/common/gps/gps_ww_supl.mk)
 
 # LDPI assets
 PRODUCT_LOCALES += ldpi mdpi
