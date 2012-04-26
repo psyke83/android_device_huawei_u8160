@@ -34,6 +34,17 @@ PRODUCT_PACKAGES += \
     make_ext4fs \
     e2fsck
 
+# Live wallpaper packages
+PRODUCT_PACKAGES += \
+    LiveWallpapersPicker \
+    librs_jni \
+    LiveWallpapers \
+    VisualizationWallpapers
+
+# Publish that we support the live wallpaper feature.
+PRODUCT_COPY_FILES += \
+    packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:/system/etc/permissions/android.software.live_wallpaper.xml
+
 # Hardware permissions
 PRODUCT_COPY_FILES += \
     frameworks/base/data/etc/android.hardware.camera.xml:system/etc/permissions/android.hardware.camera.xml \
