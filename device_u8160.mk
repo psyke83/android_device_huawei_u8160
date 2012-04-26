@@ -73,6 +73,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/etc/bluetooth/audio.conf:system/etc/bluetooth/audio.conf
 
+# USB autorun.iso for cdrom emulation in kernel driver
+PRODUCT_COPY_FILES += \
+    device/huawei/u8160/prebuilt/cdrom/autorun.iso:system/cdrom/autorun.iso
+
 # Other
 PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/lib/egl/egl.cfg:system/lib/egl/egl.cfg \
