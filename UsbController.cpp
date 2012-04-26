@@ -62,9 +62,9 @@ int UsbController::enableRNDIS(bool enable) {
 }
 
 bool UsbController::isRNDISStarted() {
-    char value=0;
-    int fd = open("/sys/devices/platform/android_usb/functions/rndis", O_RDWR);
-    read(fd, &value, 1);
+    char value[5];
+    int fd = open("/sys/module/g_android/parameters/product_id", O_RDONLY);
+    read(fd, &value, 5);
     close(fd);
-    return (value == '1' ? true : false);
+    return (!strncmp(value,"1039",4) ? true : false);
 }
