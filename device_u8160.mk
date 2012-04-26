@@ -145,6 +145,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.compcache.default=18
 
+# Tethering (rndis kernel kickback) properties
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.tethering.kb_disconnect=1
+
 ifeq ($(TARGET_PREBUILT_KERNEL),)
     LOCAL_KERNEL := device/huawei/u8160/prebuilt/kernel
 else
