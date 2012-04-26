@@ -20,7 +20,7 @@ on boot
 
 service qmuxd /system/bin/qmuxd
 
-service hciattach /system/bin/brcm_patchram_plus \
+service hciattach /system/bin/huawei_brcm_patchram_plus \
 	--enable_hci --enable_lpm --baudrate 3000000 \
 	--patchram /system/etc/bluetooth/BCM4329.hcd \
 	--scopcm=0,0,0,0,0,0,4,0,0,0 \
