@@ -149,6 +149,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.tethering.kb_disconnect=1
 
+# Audio properties
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.speaker-attn=6
+
 ifeq ($(TARGET_PREBUILT_KERNEL),)
     LOCAL_KERNEL := device/huawei/u8160/prebuilt/kernel
 else
