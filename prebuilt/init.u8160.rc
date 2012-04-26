@@ -15,6 +15,11 @@ on boot
     # Increase read throughput from sd card
     write /sys/block/mmcblk0/bdi/read_ahead_kb 256
 
+    # Enable KSM (Kernel SamePage Mapping)
+    write /sys/kernel/mm/ksm/sleep_millisecs 4000
+    write /sys/kernel/mm/ksm/pages_to_scan 128
+    write /sys/kernel/mm/ksm/run 1
+
     chown system system /sys/bus/platform/devices/msm_sdcc.1/polling
     chown system system /sys/bus/platform/devices/msm_sdcc.2/polling
 
