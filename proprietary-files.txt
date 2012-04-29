@@ -9,7 +9,6 @@ bin/akmd8975
 bin/qmuxd
 bin/rild
 
-lib/hw/gralloc.msm7k.so
 lib/hw/sensors.default.so
 
 lib/libaudioeq.so
