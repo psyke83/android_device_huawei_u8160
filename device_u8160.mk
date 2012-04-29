@@ -19,6 +19,7 @@ PRODUCT_PACKAGES += \
     copybit.msm7k \
     Gallery \
     gps.u8160 \
+    gralloc.u8160 \
     huawei_brcm_patchram_plus \
     libOmxCore \
     libOmxVidEnc \
