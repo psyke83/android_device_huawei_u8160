@@ -234,10 +234,20 @@ status_t AudioPolicyManager::checkAndSetVolume(int stream, int index, audio_io_h
 
     // when the output device is the speaker it's necessary to apply an extra volume attenuation (default 6dB) to prevent audio distortion
     if (device == AudioSystem::DEVICE_OUT_SPEAKER) {
-        char buf[PROPERTY_VALUE_MAX];
-        property_get("persist.sys.speaker-attn", buf, "6");
-        LOGI("setStreamVolume() attenuation [%s]", buf);
-        float volumeFactor = pow(10.0, -atof(buf)/20.0);
+        char speakerBuf[PROPERTY_VALUE_MAX];
+        property_get("persist.sys.speaker-attn", speakerBuf, "6");
+        LOGI("setStreamVolume() attenuation [%s]", speakerBuf);
+        float volumeFactor = pow(10.0, -atof(speakerBuf)/20.0);
+        LOGV("setStreamVolume() applied volume factor %f to device %d", volumeFactor, device);
+        volume *= volumeFactor;
+    }
+
+    // apply optional volume attenuation (default 0dB) to headset/headphone
+    if (device == AudioSystem::DEVICE_OUT_WIRED_HEADSET || AudioSystem::DEVICE_OUT_WIRED_HEADPHONE ) {
+        char headsetBuf[PROPERTY_VALUE_MAX];
+        property_get("persist.sys.headset-attn", headsetBuf, "0");
+        LOGI("setStreamVolume() attenuation [%s]", headsetBuf);
+        float volumeFactor = pow(10.0, -atof(headsetBuf)/20.0);
         LOGV("setStreamVolume() applied volume factor %f to device %d", volumeFactor, device);
         volume *= volumeFactor;
     }
