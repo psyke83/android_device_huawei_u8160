@@ -24,10 +24,8 @@ lib/libmm-adspsvc.so
 lib/libmmgsdilib.so
 lib/libmmipl.so
 lib/libmmjpeg.so
-lib/libmm-omxcore.so
 lib/libmmprocess.so
 lib/libnv.so
-lib/libOmxCore.so
 lib/libOmxH264Dec.so
 lib/libOmxMpeg4Dec.so
 lib/libOmxVidEnc.so
