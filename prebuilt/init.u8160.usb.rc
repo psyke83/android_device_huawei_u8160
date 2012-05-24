@@ -1,15 +1,24 @@
 on init
-    #write /sys/module/g_android/parameters/product_id 1038
-    #write /sys/devices/platform/android_usb/functions/cur_pid 1038
-    #write /sys/devices/platform/android_usb/functions/enable_switch 0
-
-on property:sys.usb.config=mass_storage
+    write /sys/module/g_android/parameters $ro.serialno
     write /sys/module/g_android/parameters/product_id 1038
+    write /sys/devices/platform/android_usb/functions/cur_pid 1038
+    write /sys/devices/platform/android_usb/functions/enable_switch 0
+
+on boot
+   start start_usb0
+
+on property:sys.usb.config=adb
+    write /sys/module/g_android/parameters/product_id 1038
+    start adbd
     setprop sys.usb.state $sys.usb.config
 
 on property:sys.usb.config=mass_storage,adb
-    #write /sys/module/g_android/parameters/product_id 1038
+    write /sys/module/g_android/parameters/product_id 1038
     start adbd
+    setprop sys.usb.state $sys.usb.config
+
+on property:sys.usb.config=mass_storage
+    write /sys/module/g_android/parameters/product_id 1038
     setprop sys.usb.state $sys.usb.config
 
 on property:sys.usb.config=rndis
@@ -18,10 +27,12 @@ on property:sys.usb.config=rndis
 
 on property:sys.usb.config=rndis,adb
     write /sys/module/g_android/parameters/product_id 1039
+    start adbd
     setprop sys.usb.state $sys.usb.config
 
-on property:sys.usb.config=mass_storage,rndis
+on property:sys.usb.config=mass_storage,rndis,adb
     write /sys/module/g_android/parameters/product_id 1039
+    start adbd
     setprop sys.usb.state $sys.usb.config
 
 # Adding this in because adb is being removed from persist.sys.usb.config after booting

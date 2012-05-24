@@ -28,6 +28,6 @@ LOCAL_SRC_FILES := 	\
 	framebuffer.cpp \
 	mapper.cpp
 	
-LOCAL_MODULE := gralloc.u8160
+LOCAL_MODULE := gralloc.$(TARGET_BOOTLOADER_BOARD_NAME)
 LOCAL_CFLAGS:= -DLOG_TAG=\"gralloc\"
 include $(BUILD_SHARED_LIBRARY)

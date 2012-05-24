@@ -686,7 +686,7 @@ CLIENT *clnt_create(
         char name[20];
 
         /* for versions like 0x00010001, only compare against major version */
-        if ((vers & 0xFFF00000) == 0)
+        if (vers!=0x20002 && (vers & 0xFFF00000) == 0)
             vers &= 0xFFFF0000;
 
         pthread_mutex_lock(&rx_mutex);
@@ -701,7 +701,7 @@ CLIENT *clnt_create(
 	    }
 	}
         /* Implment backwards compatibility */
-        vers = (vers & 0x80000000) ? vers : vers & 0xFFFF0000;
+        vers = (vers & 0x80000000 || vers == 0x20002) ? vers : vers & 0xFFFF0000;
 
         snprintf(name, sizeof(name), "%08x:%08x", (uint32_t)prog, (int)vers);
         client->xdr = xdr_init_common(name, 1 /* client XDR */);

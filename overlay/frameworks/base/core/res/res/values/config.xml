@@ -21,8 +21,11 @@
 for different hardware and product builds. -->
 <resources>
 
+    <!-- Enables or disables fading edges when marquee is enabled in TextView. -->
+    <bool name="config_ui_enableFadingMarquee">false</bool>
+
     <!-- Our device doesn't animate well. -->
-    <bool name="config_animateScreenLights">false</bool>
+    <bool name="config_animateScreenLights">true</bool>
 
     <!-- Flag indicating whether the surface flinger is inefficient
 at performing a blur. Used by parts of the UI to turn off
@@ -40,7 +43,7 @@ The 2d accelerator can't do an alpha transformation of
 a surface with an alpha channel, so enable this special mode
 to avoid going into software rendering.
 -->
-    <bool name="config_sf_limitedAlpha">false</bool>
+    <bool name="config_sf_limitedAlpha">true</bool>
 
     <!-- Flag indicating whether we should enable the automatic brightness in Settings.
 config_hardware_automatic_brightness_available is not set, so we will use software implementation -->
@@ -155,6 +158,7 @@ does not require auto-restore. -->
         <item>"mobile_mms,2,0,2,60000,true"</item>
         <item>"mobile_supl,3,0,2,60000,true"</item>
         <item>"mobile_dun,4,0,4,60000,true"</item>
+        <item>"bluetooth,7,7,2,-1,true"</item>
     </string-array>
 
     <!-- An Array of "[ConnectivityManager connectionType],
@@ -175,6 +179,13 @@ be empty. An example would be "usb.*" -->
         <item>"wlan\\d"</item>
     </string-array>
 
+    <!-- List of regexpressions describing the interface (if any) that represent tetherable
+         bluetooth interfaces.  If the device doesn't want to support tethering over bluetooth this
+         should be empty. -->
+    <string-array translatable="false" name="config_tether_bluetooth_regexs">
+        <item>"bnep\\d"</item>
+    </string-array>
+
     <!-- Array of ConnectivityManager.TYPE_xxxx values allowable for tethering -->
     <!-- Common options are [1, 4] for TYPE_WIFI and TYPE_MOBILE_DUN or
 <!== [0,1,5,7] for TYPE_MOBILE, TYPE_WIFI, TYPE_MOBILE_HIPRI and TYPE_BLUETOOTH -->
@@ -183,5 +194,9 @@ be empty. An example would be "usb.*" -->
         <item>1</item>
         <item>4</item>
     </integer-array>
+
+    <!-- Base "touch slop" value used by ViewConfiguration as a
+         movement threshold where scrolling should begin. -->
+    <dimen name="config_viewConfigurationTouchSlop">12dp</dimen>
 
 </resources>

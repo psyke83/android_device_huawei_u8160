@@ -24,11 +24,10 @@ on boot
     # Increase read throughput from sd card
     write /sys/block/mmcblk0/bdi/read_ahead_kb 256
 
-    chmod 0777 /sys/kernel/logger/log_events/enable
-    chmod 0777 /sys/kernel/logger/log_main/enable
-    chmod 0777 /sys/kernel/logger/log_main/priority
-    chmod 0777 /sys/kernel/logger/log_radio/enable
-    chmod 0777 /sys/kernel/logger/log_radio/priority
+    # Enable KSM (Kernel SamePage Mapping)
+    write /sys/kernel/mm/ksm/sleep_millisecs 4000
+    write /sys/kernel/mm/ksm/pages_to_scan 128
+    write /sys/kernel/mm/ksm/run 0
 
     chown system system /sys/bus/platform/devices/msm_sdcc.1/polling
     chown system system /sys/bus/platform/devices/msm_sdcc.2/polling
@@ -40,7 +39,7 @@ on boot
 service qmuxd /system/bin/qmuxd
     class main
 
-service hciattach /system/bin/brcm_patchram_plus \
+service hciattach /system/bin/huawei_brcm_patchram_plus \
 	--enable_hci --enable_lpm --baudrate 3000000 \
 	--patchram /system/etc/bluetooth/BCM4329.hcd \
 	--scopcm=0,0,0,0,0,0,4,0,0,0 \

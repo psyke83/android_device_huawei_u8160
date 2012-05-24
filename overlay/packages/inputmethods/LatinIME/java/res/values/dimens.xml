@@ -19,82 +19,10 @@
 -->
 
 <resources>
-    <!-- keyboardHeight = row_height*4 + key_bottom_gap*3 -->
-    <dimen name="keyboardHeight">1.285in</dimen>
-    <fraction name="maxKeyboardHeight">50%p</fraction>
-    <fraction name="minKeyboardHeight">-61.8%p</fraction>
-
-    <dimen name="popup_key_height">0.330in</dimen>
-
-    <dimen name="mini_keyboard_horizontal_edges_padding">16dip</dimen>
-    <dimen name="mini_keyboard_key_horizontal_padding">8dip</dimen>
-
-    <fraction name="keyboard_top_padding">1.556%p</fraction>
-    <fraction name="keyboard_bottom_padding">4.669%p</fraction>
-    <fraction name="keyboard_horizontal_edges_padding">0%p</fraction>
-    <fraction name="key_bottom_gap">6.250%p</fraction>
-    <fraction name="key_horizontal_gap">1.352%p</fraction>
-
-    <dimen name="keyboardHeight_stone">1.317in</dimen>
-    <fraction name="keyboard_top_padding_stone">1.556%p</fraction>
-    <fraction name="keyboard_bottom_padding_stone">0.778%p</fraction>
-    <fraction name="key_bottom_gap_stone">7.506%p</fraction>
-    <fraction name="key_horizontal_gap_stone">1.739%p</fraction>
-
-    <fraction name="key_bottom_gap_gb">6.495%p</fraction>
-    <fraction name="key_horizontal_gap_gb">1.971%p</fraction>
-
-    <fraction name="keyboard_top_padding_ics">2.335%p</fraction>
-    <fraction name="keyboard_bottom_padding_ics">1.669%p</fraction>
+    <dimen name="keyboardHeight">1.085in</dimen>
+    <fraction name="keyboard_bottom_padding_ics">2.669%p</fraction>
     <fraction name="key_bottom_gap_ics">3.127%p</fraction>
-    <fraction name="key_horizontal_gap_ics">1.739%p</fraction>
-    <dimen name="mini_keyboard_horizontal_edges_padding_ics">4dip</dimen>
-
-    <!-- Amount of allowance for selecting keys in a mini popup keyboard by sliding finger. -->
-    <!-- popup_key_height x 1.2 -->
-    <dimen name="mini_keyboard_slide_allowance">0.396in</dimen>
-    <!-- popup_key_height x -1.0 -->
-    <dimen name="mini_keyboard_vertical_correction">-0.330in</dimen>
-    <!-- We use "inch", not "dip" because this value tries dealing with physical distance related
-         to user's finger. -->
-    <dimen name="keyboard_vertical_correction">0.0in</dimen>
-
-    <fraction name="key_letter_ratio">55%</fraction>
-    <fraction name="key_large_letter_ratio">65%</fraction>
-    <fraction name="key_label_ratio">34%</fraction>
-    <fraction name="key_hint_letter_ratio">25%</fraction>
-    <fraction name="key_hint_label_ratio">44%</fraction>
-    <fraction name="key_uppercase_letter_ratio">35%</fraction>
-    <fraction name="key_preview_text_ratio">82%</fraction>
-    <dimen name="key_preview_height">80sp</dimen>
-    <dimen name="key_preview_offset">0.1in</dimen>
-
-    <dimen name="key_label_horizontal_padding">4dip</dimen>
-    <dimen name="key_hint_letter_padding">1dp</dimen>
-    <dimen name="key_popup_hint_letter_padding">2dp</dimen>
-    <dimen name="key_uppercase_letter_padding">2dp</dimen>
-
-    <dimen name="key_preview_height_ics">80sp</dimen>
-    <dimen name="key_preview_offset_ics">0.05in</dimen>
-
-    <dimen name="suggestions_strip_height">40dip</dimen>
-    <dimen name="more_suggestions_key_horizontal_padding">12dip</dimen>
-    <dimen name="more_suggestions_row_height">40dip</dimen>
-    <dimen name="more_suggestions_bottom_gap">6dip</dimen>
-    <dimen name="more_suggestions_modal_tolerance">0.2in</dimen>
-    <dimen name="more_suggestions_slide_allowance">0.1in</dimen>
-    <integer name="max_more_suggestions_row">6</integer>
-    <fraction name="min_more_suggestions_width">90%</fraction>
-    <fraction name="more_suggestions_info_ratio">18%</fraction>
+    <integer name="max_more_suggestions_row">3</integer>
     <!-- key_preview_backing_height = more_suggestions_row_height * max_more_suggestions_row -->
     <dimen name="key_preview_backing_height">120dip</dimen>
-    <dimen name="suggestions_strip_padding">0dip</dimen>
-    <dimen name="suggestion_min_width">44dip</dimen>
-    <dimen name="suggestion_padding">6dip</dimen>
-    <dimen name="suggestion_text_size">18dip</dimen>
-    <dimen name="more_suggestions_hint_text_size">27dip</dimen>
-    <integer name="suggestions_count_in_strip">3</integer>
-    <integer name="center_suggestion_percentile">36</integer>
-
-    <dimen name="key_hysteresis_distance">0.05in</dimen>
 </resources>

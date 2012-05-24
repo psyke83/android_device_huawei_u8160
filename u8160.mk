@@ -1,4 +1,3 @@
-#
 # Copyright (C) 2011 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,17 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#
-# AndroidBoard.mk is a legacy mechanism to deal with a few
-# edge-cases that can't be managed otherwise. No new rules
-# should be added to this file.
-#
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
 
-LOCAL_PATH := $(call my-dir)
+# Inherit from u8160 device
+$(call inherit-product, $(LOCAL_PATH)/device.mk)
 
-# Least specific includes go first, so that they can get
-# overridden further down
-include $(CLEAR_VARS)
+# The gps config appropriate for this device
+$(call inherit-product, device/common/gps/gps_eu_supl.mk)
 
-# include the non-open-source counterpart to this file
--include vendor/huawei/u8160/AndroidBoardVendor.mk
+$(call inherit-product-if-exists, vendor/huawei/u8160/u8160-vendor.mk)
+$(call inherit-product-if-exists, vendor/huawei/u8160/u8160-vendor-blobs.mk)
