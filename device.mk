@@ -48,11 +48,12 @@ PRODUCT_PACKAGES += \
 
 # Other
 PRODUCT_PACKAGES += \
-    lights.u8160 \
-    gps.u8160 \
+    Apollo \
     camera.u8160 \
     FileManager \
-    Apollo
+    gps.u8160 \
+    huawei_brcm_patchram_plus \
+    lights.u8160
 
 # Hardware permissions
 PRODUCT_COPY_FILES += \
