@@ -9,8 +9,6 @@ bin/akmd8975
 bin/qmuxd
 bin/rild
 
-lib/hw/copybit.msm7k.so
-lib/hw/gralloc.msm7k.so
 lib/hw/sensors.default.so
 
 lib/libaudioeq.so
@@ -26,10 +24,8 @@ lib/libmm-adspsvc.so
 lib/libmmgsdilib.so
 lib/libmmipl.so
 lib/libmmjpeg.so
-lib/libmm-omxcore.so
 lib/libmmprocess.so
 lib/libnv.so
-lib/libOmxCore.so
 lib/libOmxH264Dec.so
 lib/libOmxMpeg4Dec.so
 lib/libOmxVidEnc.so
@@ -44,3 +40,8 @@ lib/libril-qc-1.so
 lib/libril-qcril-hook-oem.so
 lib/libwms.so
 lib/libwmsts.so
+
+wifi/firmware.bin
+wifi/firmware_apsta.bin
+wifi/firmware_test.bin
+wifi/nvram.txt
