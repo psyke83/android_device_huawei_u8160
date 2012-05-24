@@ -78,6 +78,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/init.u8160.rc:root/init.u8160.rc \
     device/huawei/u8160/prebuilt/init.u8160.usb.rc:root/init.u8160.usb.rc \
+    device/huawei/u8160/prebuilt/initlogo.rle:root/initlogo.rle \
     device/huawei/u8160/prebuilt/ueventd.u8160.rc:root/ueventd.u8160.rc
 
 # Wi-Fi related
