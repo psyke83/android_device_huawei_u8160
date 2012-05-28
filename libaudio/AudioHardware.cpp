@@ -1555,12 +1555,26 @@ status_t AudioHardware::doRouting(AudioStreamInMSM72xx *input)
             new_post_proc_feature_mask = (ADRC_ENABLE | EQ_ENABLE | RX_IIR_ENABLE | MBADRC_ENABLE);
         } else if (outputDevices & AudioSystem::DEVICE_OUT_WIRED_HEADPHONE) {
             if (outputDevices & AudioSystem::DEVICE_OUT_SPEAKER) {
-                LOGI("Routing audio to No microphone Wired Headset and Speaker (%d,%x)", mMode, outputDevices);
-                new_snd_device = SND_DEVICE_HEADSET_AND_SPEAKER;
-                new_post_proc_feature_mask = (ADRC_ENABLE | EQ_ENABLE | RX_IIR_ENABLE | MBADRC_ENABLE);
+                if (mFmRadioEnabled) {
+                    LOGI("Routing audio to FM Speakerphone");
+                    new_snd_device = SND_DEVICE_FM_SPEAKER;
+                    new_post_proc_feature_mask = (EQ_ENABLE | RX_IIR_ENABLE);
+                    new_post_proc_feature_mask &= (MBADRC_DISABLE | ADRC_DISABLE);
+                } else {
+                    LOGI("Routing audio to No microphone Wired Headset and Speaker (%d,%x)", mMode, outputDevices);
+                    new_snd_device = SND_DEVICE_HEADSET_AND_SPEAKER;
+                    new_post_proc_feature_mask = (ADRC_ENABLE | EQ_ENABLE | RX_IIR_ENABLE | MBADRC_ENABLE);
+                }
             } else {
-                LOGI("Routing audio to No microphone Wired Headset (%d,%x)", mMode, outputDevices);
-                new_snd_device = SND_DEVICE_NO_MIC_HEADSET;
+                if (mFmRadioEnabled) {
+                    LOGI("Routing audio to FM Headset");
+                    new_snd_device = SND_DEVICE_FM_HEADSET;
+                    new_post_proc_feature_mask = (EQ_ENABLE | RX_IIR_ENABLE);
+                    new_post_proc_feature_mask &= (MBADRC_DISABLE | ADRC_DISABLE);
+                } else {
+                    LOGI("Routing audio to No microphone Wired Headset (%d,%x)", mMode, outputDevices);
+                    new_snd_device = SND_DEVICE_NO_MIC_HEADSET;
+                }
             }
 #endif
         } else if (outputDevices & AudioSystem::DEVICE_OUT_WIRED_HEADSET) {
