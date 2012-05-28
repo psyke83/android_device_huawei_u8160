@@ -1,19 +1,12 @@
 #!/system/bin/sh
 
-# HACK: patch simple2ext's script to prevent filesystem corruption
-S2ECONFIG="/data/local/s2e_config/.mounts_ext4"
-if [ -f $S2ECONFIG ]; then
-    rm $S2ECONFIG
+# Create userinit.d folder if necessary
+if [ ! -d /data/local/userinit.d ]; then
+    busybox mkdir -p -m 777 /data/local/userinit.d
+    busybox chown system:system /data/local/userinit.d
 fi
 
-# HACK: migrate eth0 -> wlan0 in wpa_supplicant.conf
-WPACONFIG="/data/misc/wifi/wpa_supplicant.conf"
-if [ $(cat $WPACONFIG | grep "ctrl_interface=eth0") ]; then
-    sed -e 's/ctrl_interface=eth0/ctrl_interface=wlan0/g' -i $WPACONFIG
-fi
+# Enable compcache
+handle_compcache
 
-# HACK: enable compcache
-#compcache start
 
-# HACK: enable swap
-swapon /dev/block/mmcblk0p3

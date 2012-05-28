@@ -11,8 +11,6 @@ if [ "$1" = "" ]; then
     echo "Usage: madconfig [option]"
     echo "Options:"
     echo ""
-    echo " * ksmon   - enable Kernel Samepage Merging (KSM)"
-    echo " * ksmoff  - disable Kernel Samepage Merging (KSM)"
     echo " * swapon  - enable swap"
     echo " * swapoff - disable swap"
     echo " * u8180   - enable U8180 ROM branding"
@@ -20,14 +18,6 @@ if [ "$1" = "" ]; then
     echo ""
     echo "MAD Team ROM status:"
     echo ""
-    echo "Swap size:   " `free | grep Swap | awk ' { print ($2) } '`"KB"
-
-    echo -n "KSM:          "
-    if [ -f $ksmfile ]; then
-        echo "enabled"
-    else
-        echo "disabled"
-    fi
     echo -n "Swap:         "
     if [ -f $swapfile ]; then
         echo "enabled"
@@ -40,7 +30,8 @@ if [ "$1" = "" ]; then
      else
          echo "ROM branding: U8160 (default)"
     fi
-         echo ""
+    echo ""
+    exit
 fi
 
 if [ "$(id)" != "uid=0(root) gid=0(root)" ]; then
@@ -52,22 +43,8 @@ fi
 
 # Create userinit.d folder if necessary
 if [ ! -d /data/local/userinit.d ]; then
-    mkdir /data/local/userinit.d
-    busybox chmod 777 /data/local/userinit.d
+    busybox mkdir -p -m 777 /data/local/userinit.d
     busybox chown system:system /data/local/userinit.d
-fi
-
-if [ "$1" = "ksmon" ]; then
-    echo "echo 1 > /sys/kernel/mm/ksm/run" >$ksmfile
-    busybox chmod +x $ksmfile
-    $ksmfile
-    echo "KSM enabled! Setting will be kept on reboot."
-fi
-
-if [ "$1" = "ksmoff" ]; then
-    rm $ksmfile
-    echo 0 > /sys/kernel/mm/ksm/run
-    echo "KSM disabled! Setting will be kept on reboot."
 fi
 
 if [ "$1" = "swapon" ]; then
@@ -84,7 +61,7 @@ if [ "$1" = "swapoff" ]; then
 fi
 
 if [ "$1" = "u8180" ]; then
-    echo "if [ `cat /system/build.prop | grep 'ro.product.model='` = 'ro.product.model=U8160' ]; then mount -o remount,rw /system; sleep 2; sed -e 's/ro.product.model=U8160/ro.product.model=U8180/g' -i /system/build.prop; sleep 2; mount -o remount,ro /system; fi" >$modelfile
+    echo "if [ `cat /system/build.prop | grep 'ro.product.model='` = 'ro.product.model=U8160' ]; then mount -o remount,rw /system; sleep 2; busybox sed -e 's/ro.product.model=U8160/ro.product.model=U8180/g' -i /system/build.prop; sleep 2; mount -o remount,ro /system; fi" >$modelfile
     busybox chmod +x $modelfile
     $modelfile
     echo "U8180 branding enabled! Setting will be kept on ROM upgrade."
@@ -93,7 +70,7 @@ fi
 
 if [ "$1" = "u8160" ]; then
     sleep 2; mount -o remount,rw /system
-    sed -e 's/ro.product.model=U8180/ro.product.model=U8160/g' -i /system/build.prop
+    busybox sed -e 's/ro.product.model=U8180/ro.product.model=U8160/g' -i /system/build.prop
     sleep 2; mount -o remount,ro /system
     if [ -f $modelfile ]; then rm $modelfile; fi
     echo "U8160 branding restored."

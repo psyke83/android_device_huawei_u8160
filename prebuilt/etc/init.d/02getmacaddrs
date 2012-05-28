@@ -8,7 +8,7 @@
 usbserial=`cat /sys/module/g_android/parameters/serial_number | tr '[A-Z]' '[a-z]'`
 
 # convert to mac address block format
-usbmac=`echo $usbserial | sed 's!^M$!!;s!\-!!g;s!\.!!g;s!\(..\)!\1:!g;s!:$!!'`
+usbmac=`echo $usbserial | busybox sed 's!^M$!!;s!\-!!g;s!\.!!g;s!\(..\)!\1:!g;s!:$!!'`
 # get first 5 mac address blocks
 firstpart=`echo $usbmac | cut -d ":" -f 1,2,3,4,5`":"
 # get final mac address block
@@ -42,7 +42,7 @@ echo "wifimac="$wifimac
 echo "btmac="$btmac
 
 # write the addresses to the appropriate configuration files
-cat /system/wifi/nvram.txt | sed -e s/00:90:4c:14:43:29/$wifimac/g >/data/misc/wifi/nvram.txt
+cat /system/wifi/nvram.txt | busybox sed -e s/00:90:4c:14:43:29/$wifimac/g >/data/misc/wifi/nvram.txt
 echo $btmac >/data/misc/bluetooth/bdaddr
 
 exit
