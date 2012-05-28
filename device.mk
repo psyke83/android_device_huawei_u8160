@@ -25,14 +25,14 @@ PRODUCT_LOCALES += mdpi
 
 # Graphics 
 PRODUCT_PACKAGES += \
-    gralloc.u8160 \
-    copybit.u8160
+    copybit.u8160 \
+    gralloc.u8160
 
 # Audio
 PRODUCT_PACKAGES += \
+    audio.a2dp.default \
     audio_policy.u8160 \
-    audio.primary.u8160 \
-    audio.a2dp.default
+    audio.primary.u8160
 
 # Zram
 PRODUCT_PACKAGES += \
@@ -48,12 +48,14 @@ PRODUCT_PACKAGES += \
 
 # Other
 PRODUCT_PACKAGES += \
-    Apollo \
     camera.u8160 \
     FileManager \
     gps.u8160 \
     huawei_brcm_patchram_plus \
-    lights.u8160
+    lights.u8160 \
+    Music \
+    SoundRecoder \
+    VoiceDialer
 
 # Hardware permissions
 PRODUCT_COPY_FILES += \
@@ -65,7 +67,7 @@ PRODUCT_COPY_FILES += \
     frameworks/base/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
     frameworks/base/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
     frameworks/base/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
-    frameworks/base/data/etc/android.hardware.touchscreen.multitouch.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.xml \
+    frameworks/base/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml \
     frameworks/base/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
     frameworks/base/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
 
@@ -118,6 +120,9 @@ PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/etc/init.d/02getmacaddrs:system/etc/init.d/02getmacaddrs \
     device/huawei/u8160/prebuilt/etc/init.d/02madteam:system/etc/init.d/02madteam
 
+# Ensure that /cache is never used for deodexing
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.dexopt-data-only=1
 
 # Enable Google-specific location features,
 # like NetworkLocationProvider and LocationCollector
@@ -144,11 +149,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Networking properties
 PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface=wlan0 \
-    wifi.supplicant_scan_interval=60
+    wifi.supplicant_scan_interval=45
 
 # Performance & graphics properties
 PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.heapsize=24m \
+    dalvik.vm.heapsize=32m \
     persist.sys.purgeable_assets=1 \
     persist.sys.use_16bpp_alpha=1 \
     persist.sys.use_dithering=1 \
@@ -164,12 +169,14 @@ PRODUCT_PROPERTY_OVERRIDES += \
     view.scroll_friction=0.008 \
     view.touch_slop=15
 
-# Compcache properties
+# Compcache/ZRAM properties
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.compcache.default=18
+    ro.zram.default=18
 
-# Audio properties
+# Audio attenuation
 PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.fm-attn=0 \
+    persist.sys.headset-attn=0 \
     persist.sys.speaker-attn=6
 
 # NEW ICS properties (may need verification/testing)
@@ -180,7 +187,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.ril.gprsclass=10 \
     ro.telephony.ril.v3=icccardstatus,datacall,signalstrength,facilitylock \
     mobiledata.interfaces=rmnet0,rmnet1,rmnet2 \
-    net.qtaguid_enabled=0 \
     debug.gr.swapinterval=0 \
     persist.sys.usb.config=mass_storage,adb \
     sys.usb.config=mass_storage,adb \
