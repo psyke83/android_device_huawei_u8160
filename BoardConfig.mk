@@ -26,6 +26,7 @@ TARGET_SPECIFIC_HEADER_PATH := device/huawei/u8160/include
 
 # Camera
 BOARD_USE_FROYO_LIBCAMERA := true
+BOARD_LIBCAMERA_MISSING_AUTOFOCUS := true
 
 # ARMv6-compatible processor rev 2 (v6l)
 # CPU
