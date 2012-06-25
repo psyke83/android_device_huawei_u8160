@@ -35,6 +35,10 @@ PRODUCT_PACKAGES += \
     make_ext4fs \
     e2fsck
 
+# U8160Parts
+PRODUCT_PACKAGES += \
+    U8160Parts
+
 # Live wallpaper packages
 PRODUCT_PACKAGES += \
     LiveWallpapersPicker \
@@ -94,6 +98,13 @@ PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/lib/egl/egl.cfg:system/lib/egl/egl.cfg \
     device/huawei/u8160/prebuilt/etc/sysctl.conf:system/etc/sysctl.conf \
     device/huawei/u8160/prebuilt/etc/vold.fstab:system/etc/vold.fstab
+
+# U8160Parts
+PRODUCT_COPY_FILES += \
+    device/huawei/u8160/prebuilt/bin/handle_u8160parts:system/bin/handle_u8160parts \
+    device/huawei/u8160/prebuilt/bin/reodexer:system/bin/reodexer \
+    device/huawei/u8160/prebuilt/etc/init.d/02u8160parts:system/etc/init.d/02u8160parts \
+    device/huawei/u8160/prebuilt/etc/init.u8160parts.rc:system/etc/init.u8160parts.rc
 
 # Enable Google-specific location features,
 # like NetworkLocationProvider and LocationCollector

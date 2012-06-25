@@ -1,0 +1,27 @@
+on boot
+
+# U8160 - helper service
+service u8160parts /system/bin/sh /system/bin/handle_u8160parts
+    user root
+    group root
+    oneshot
+
+on property:persist.sys.ksm=0
+    write /sys/kernel/mm/ksm/run 0
+
+on property:persist.sys.ksm=1
+    write /sys/kernel/mm/ksm/run 1
+
+on property:persist.sys.reodex=0
+    write /data/local/.odexnow 0
+    start u8160parts
+
+on property:persist.sys.reodex=1
+    write /data/local/.odexnow 1
+    start u8160parts
+
+on property:persist.sys.swap=0
+    exec /system/xbin/swapoff /dev/block/mmcblk0p3
+
+on property:persist.sys.swap=1
+    exec /system/xbin/swapon /dev/block/mmcblk0p3

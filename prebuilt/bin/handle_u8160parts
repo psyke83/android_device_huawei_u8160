@@ -1,0 +1,18 @@
+#!/system/bin/sh
+# handle_u8160parts
+# by psyke83
+
+ODEXBOOT=`cat /data/local/.odexboot`
+ODEXNOW=`cat /data/local/.odexnow`
+if [ $ODEXBOOT != $ODEXNOW ]; then
+    if [ $ODEXNOW = "1" ]; then
+         echo "Starting reodex operation..."
+         reodexer reodex
+         echo 1 > /data/local/.odexboot
+    fi
+    if [ $ODEXNOW = "0" ]; then
+         echo "Starting deodex operation..."
+         reodexer deodex
+         echo 0 > /data/local/.odexboot
+    fi
+fi

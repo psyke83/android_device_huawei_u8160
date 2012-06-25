@@ -5,6 +5,8 @@ on post-fs
    
 on boot
 
+    import /system/etc/init.u8160parts.rc
+
     setprop ro.bt.bdaddr_path /data/misc/bluetooth/bdaddr
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
@@ -18,7 +20,7 @@ on boot
     # Enable KSM (Kernel SamePage Mapping)
     write /sys/kernel/mm/ksm/sleep_millisecs 4000
     write /sys/kernel/mm/ksm/pages_to_scan 128
-    write /sys/kernel/mm/ksm/run 1
+    write /sys/kernel/mm/ksm/run 0
 
     chown system system /sys/bus/platform/devices/msm_sdcc.1/polling
     chown system system /sys/bus/platform/devices/msm_sdcc.2/polling
