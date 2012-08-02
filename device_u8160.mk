@@ -156,7 +156,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Compcache properties
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.compcache.default=18
+    ro.compcache.default=0
 
 # Tethering (rndis kernel kickback) properties
 PRODUCT_PROPERTY_OVERRIDES += \
