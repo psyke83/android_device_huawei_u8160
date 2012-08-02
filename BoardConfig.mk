@@ -97,7 +97,7 @@ WIFI_DRIVER_FW_AP_PATH := "/system/wifi/firmware_apsta.bin"
 WIFI_DRIVER_FW_STA_PATH := "/system/wifi/firmware.bin"
 WIFI_DRIVER_MODULE_ARG := "firmware_path=/system/wifi/firmware.bin nvram_path=/data/misc/wifi/nvram.txt iface_name=wlan dhd_poll=1 dhd_watchdog_ms=200"
 WIFI_DRIVER_MODULE_NAME := "dhd"
-WIFI_DRIVER_MODULE_PATH := "/wifi/dhd.ko"
+WIFI_DRIVER_MODULE_PATH := "/system/lib/modules/dhd.ko"
 WPA_SUPPLICANT_VERSION := VER_0_6_X
 #BOARD_WEXT_NO_COMBO_SCAN := true
 

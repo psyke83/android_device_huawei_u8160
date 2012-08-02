@@ -74,9 +74,16 @@ PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/ueventd.huawei.rc:root/ueventd.huawei.rc \
     device/huawei/u8160/prebuilt/etc/init.d/02getmacaddrs:system/etc/init.d/02getmacaddrs
 
+# Kernel modules
+PRODUCT_COPY_FILES += \
+    device/huawei/u8160/prebuilt/lib/modules/cifs.ko:system/lib/modules/cifs.ko \
+    device/huawei/u8160/prebuilt/lib/modules/dhd.ko:system/lib/modules/dhd.ko \
+    device/huawei/u8160/prebuilt/lib/modules/oprofile.ko:system/lib/modules/oprofile.ko \
+    device/huawei/u8160/prebuilt/lib/modules/ramzswap.ko:system/lib/modules/ramzswap.ko \
+    device/huawei/u8160/prebuilt/lib/modules/tun.ko:system/lib/modules/tun.ko
+
 # Wi-Fi related
 PRODUCT_COPY_FILES += \
-    device/huawei/u8160/prebuilt/modules/dhd.ko:root/wifi/dhd.ko \
     device/huawei/u8160/prebuilt/etc/dhcpcd/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
     device/huawei/u8160/prebuilt/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
 
@@ -88,10 +95,6 @@ PRODUCT_COPY_FILES += \
 # Bluetooth
 PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/etc/bluetooth/audio.conf:system/etc/bluetooth/audio.conf
-
-# USB autorun.iso for cdrom emulation in kernel driver
-PRODUCT_COPY_FILES += \
-    device/huawei/u8160/prebuilt/cdrom/autorun.iso:system/cdrom/autorun.iso
 
 # Other
 PRODUCT_COPY_FILES += \
