@@ -1,4 +1,4 @@
-package com.cyanogenmod.U8160Parts;
+package com.cyanogenmod.settings.device;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -6,44 +6,44 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.SystemProperties;
 import android.preference.Preference;
-import com.cyanogenmod.U8160Parts.R;
+import com.cyanogenmod.settings.device.R;
 
 final class AttnSpeaker implements Preference.OnPreferenceClickListener {
 
-	Context context = MainActivity.mContext;
-	int selected = -1;
+    Context context = DeviceSettings.mContext;
+    int selected = -1;
 
-	AttnSpeaker(MainActivity arg0) {
-	}
+    AttnSpeaker(DeviceSettings arg0) {
+    }
 
-	public final boolean onPreferenceClick(final Preference preference) {
+    public final boolean onPreferenceClick(final Preference preference) {
 
-		String currentSetting = Command.getprop(MainActivity.PROP_SPEAKER_ATTN);
-		if (currentSetting.length() == 1) {
-			selected = Integer.parseInt(currentSetting);
-		}
+        String currentSetting = Command.getprop(DeviceSettings.PROP_SPEAKER_ATTN);
+        if (currentSetting.length() == 1) {
+            selected = Integer.parseInt(currentSetting);
+        }
 
-		AlertDialog.Builder dialog = new AlertDialog.Builder(context)
-				.setTitle(context.getText(R.string.attn_speaker))
-				.setSingleChoiceItems(MainActivity.attn, selected, new OnClickListener() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context)
+                .setTitle(context.getText(R.string.attn_speaker))
+                .setSingleChoiceItems(DeviceSettings.attn, selected, new OnClickListener() {
 
-					public void onClick(DialogInterface arg0, int arg1) {
+                    public void onClick(DialogInterface arg0, int arg1) {
 
-						SystemProperties.set(MainActivity.PROP_SPEAKER_ATTN, ""
-								+ arg1);
-						
-						preference.setSummary(context
-								.getText(R.string.current_setting) + " " + MainActivity.attn[arg1].toString());
+                        SystemProperties.set(DeviceSettings.PROP_SPEAKER_ATTN, ""
+                                + arg1);
+                        
+                        preference.setSummary(context
+                                .getText(R.string.current_setting) + " " + DeviceSettings.attn[arg1].toString());
 
-						arg0.dismiss();
+                        arg0.dismiss();
 
-					}
+                    }
 
-				})
+                })
 
-				.setNegativeButton(context.getText(R.string.cancel), null);
-		dialog.show();
-		return false;
+                .setNegativeButton(context.getText(R.string.cancel), null);
+        dialog.show();
+        return false;
 
-	}
+    }
 }

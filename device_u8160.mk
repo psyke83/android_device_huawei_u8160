@@ -101,9 +101,6 @@ PRODUCT_COPY_FILES += \
 
 # U8160Parts
 PRODUCT_COPY_FILES += \
-    device/huawei/u8160/prebuilt/bin/handle_u8160parts:system/bin/handle_u8160parts \
-    device/huawei/u8160/prebuilt/bin/reodexer:system/bin/reodexer \
-    device/huawei/u8160/prebuilt/etc/init.d/02u8160parts:system/etc/init.d/02u8160parts \
     device/huawei/u8160/prebuilt/etc/init.u8160parts.rc:system/etc/init.u8160parts.rc
 
 # Enable Google-specific location features,
