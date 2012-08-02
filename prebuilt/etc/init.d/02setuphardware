@@ -1,0 +1,81 @@
+#!/system/bin/sh
+# 02setuphardware
+# by psyke83
+#
+# This script will set up the proper MAC addresses, and set the proper phone model (U8160/U8180).
+
+echo "02setuphardware"
+echo "---------------"
+
+## Hardware revision
+
+realmodel=`cat /proc/cpuinfo | grep -m1 HUAWEI | busybox sed 's/U8130/U8180/g' | cut -c19-23`
+roproductmodel=`cat /system/build.prop | grep -m1 'ro.product.model=' | cut -c18-22`
+echo "Hardware model (real)                 : $realmodel"
+echo -n "Hardware model (from ro.product.model): $roproductmodel"
+
+if [ "$roproductmodel" != "$realmodel" ]; then
+    echo "... fixed!"
+    mount -o remount,rw /system
+    busybox sed 's/ro.product.model='$roproductmodel'/ro.product.model='$realmodel'/g' -i /system/build.prop
+    sync
+    sleep 2
+    reboot
+else
+    echo "... matches!"
+fi
+
+## MAC addresses
+
+# MAC address present in stock U8160/U8180 nvram.txt
+originalmac="00:90:4c:14:43:29"
+
+# Set a custom serial if specified by the user
+if [ "`getprop persist.sys.usbserial`" != "" ]; then
+    customusbserial=`getprop persist.sys.usbserial`
+    echo "USB serial (user set)                 : $customusbserial"
+    echo $customusbserial > /sys/module/g_android/parameters/serial_number
+fi
+
+# grab the usb serial in lower case format
+usbserial=`cat /sys/module/g_android/parameters/serial_number | tr '[A-Z]' '[a-z]'`
+
+# convert to mac address block format
+usbmac=`echo $usbserial | busybox sed 's!^M$!!;s!\-!!g;s!\.!!g;s!\(..\)!\1:!g;s!:$!!'`
+# get first 5 mac address blocks
+firstpart=`echo $usbmac | cut -d ":" -f 1,2,3,4,5`":"
+# get final mac address block
+lastpart=`echo $usbmac | cut -d ":" -f 6`
+
+# calculate wifi final mac block (lastpart + 1)
+wifipart=`printf '%x\n' $((0x$lastpart + 1))`
+if [ `expr length "$wifipart"` -eq 3 ]; then
+    wifipart=`printf '%x\n' $((0x$wifipart - 0xFF))`
+fi
+if [ `expr length "$wifipart"` -eq 1 ]; then
+    wifipart=0$wifipart
+fi
+
+# calculate bt final mac block (lastpart + 2)
+btpart=`printf '%x\n' $((0x$lastpart + 2))`
+if [ `expr length "$btpart"` -eq 3 ]; then
+    btpart=`printf '%x\n' $((0x$btpart - 0xFF))`
+fi
+if [ `expr length "$btpart"` -eq 1 ]; then
+    btpart=0$btpart
+fi
+
+# put the parts together
+wifimac=$firstpart$wifipart
+btmac=$firstpart$btpart
+
+# echo results
+echo "USB serial address (real)             : $usbmac"
+echo "New WiFi MAC address                  : $wifimac"
+echo "New Bluetooth MAC address             : $btmac"
+
+# write the addresses to the appropriate configuration files
+cat /system/wifi/nvram.txt | busybox sed -e s/$originalmac/$wifimac/g >/data/misc/wifi/nvram.txt
+echo $btmac >/data/misc/bluetooth/bdaddr
+
+exit

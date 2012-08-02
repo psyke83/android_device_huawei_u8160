@@ -72,7 +72,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/init.u8160.rc:root/init.u8160.rc \
     device/huawei/u8160/prebuilt/ueventd.huawei.rc:root/ueventd.huawei.rc \
-    device/huawei/u8160/prebuilt/etc/init.d/02getmacaddrs:system/etc/init.d/02getmacaddrs
+    device/huawei/u8160/prebuilt/etc/init.d/02setuphardware:system/etc/init.d/02setuphardware \
+    device/huawei/u8160/prebuilt/etc/init.d/05mountsd:system/etc/init.d/05mountsd
 
 # Kernel modules
 PRODUCT_COPY_FILES += \
