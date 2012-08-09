@@ -25,5 +25,5 @@
 	<bool name="softwareGLOnly">true</bool>
 
 	<!-- Resolution filtering -->
-	<string name="filtered_pictureSizes">1600x1200</string>
+	<string name="filtered_pictureSizes">2048x1536</string>
 </resources>
