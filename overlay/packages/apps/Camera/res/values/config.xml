@@ -23,7 +23,4 @@
 	<!-- set this to true if the device doesn't have a GPU, or an EGL
 	     library is for some reason unavailable -->
 	<bool name="softwareGLOnly">true</bool>
-
-	<!-- Resolution filtering -->
-	<string name="filtered_pictureSizes">2048x1536</string>
 </resources>
