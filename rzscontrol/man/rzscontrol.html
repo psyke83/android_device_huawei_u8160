@@ -1,0 +1,288 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of RZSCONTROL</TITLE>
+</HEAD><BODY>
+<H1>RZSCONTROL</H1>
+Section:  (1)<BR>Updated: 07/19/2009<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+rzscontrol - control ramzswap devices
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<DL COMPACT>
+<DT>
+<B>rzscontrol</B> {ramzswap&nbsp;device} [-b|--backing_swap=&lt;path&gt;] [-m|--memlimit_kb=&lt;value&gt;] [-d|--disksize_kb=&lt;value&gt;] [-i|--init] [-r|--reset] [-s|--stats] [-v|--verbose] [-h|--help]
+</DL>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+
+<DD>The ramzswap kernel module creates multiple ramzswap devices, equal to NUM_DEVICES parameter. With rzscontrol, you can control each of these devices.
+<P>
+
+This is how you use a ramzswap device (/dev/ramzswapX):
+<P>
+
+- Set parameters for [backing swap, memory limit] or [disk size] (see OPTIONS and EXAMPLES).
+<P>
+
+- Issue init once these parameters are set: rzscontrol /dev/ramzswapX --init.
+<P>
+
+- swapon /dev/ramzswapX (where X is ramzswap device id: 0, 1, 2... NUM_DEVICES-1).
+<P>
+
+- When you are done with this swap: swapoff /dev/ramzswapX. NOTE: swapoff will not free any compressed pages.
+<P>
+
+- After swapoff, issue reset: rzscontrol /dev/ramzswapX --reset. This will free all metadata and compressed pages.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+<B>-b, --backing_swap</B>
+<DL COMPACT><DT><DD>
+Specify backing swap device. This can either be a swap block device or a swap file. Writes are forwarded to this device when memory limit is reached or when a page is incompressible. You must swapoff backing swap device before init is issued, otherwise init will fail with -EBUSY error. Also, backing swap must be a valid swap device, otherwise 'swapon /dev/ramzswapX' will fail as if swapon was issued directly on the backing swap device.
+</DL>
+
+<P>
+
+<B>-m, --memlimit_kb</B>
+<DL COMPACT><DT><DD>
+Specify memory limit (in KB). This is the limit on amount of memory allocated for compressed pages. When this memory limit is reached, all further writes are forwarded to backing swap device. This option is valid only if backing swap is specified. This must be smaller than or equal to backing swap size. Default: 15% of RAM or backing swap size, whichever is smaller.
+</DL>
+
+<P>
+
+<B>-d, --disksize_kb</B>
+<DL COMPACT><DT><DD>
+Specify ramzswap disk size (in KB). This is the limit on number of (uncompressed) pages that can be stored in this device. This parameter is valid only when backing swap is not present since in that case, it is implicitly equal to size of the backing swap device. Default: 25% of RAM
+</DL>
+
+<P>
+
+<B>-i, --init</B>
+<DL COMPACT><DT><DD>
+Initialize given ramzswap device. It causes allocation of metadata for given ramzswap device and makes it ready to receive swap requests. Use
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+swapon">swapon</A></B>(8)
+to start using this device as swap.
+</DL>
+
+<P>
+
+<B>-r, --reset</B>
+<DL COMPACT><DT><DD>
+Resets given ramzswap device. It causes deallocation of metadata and any compressed pages for given ramzswap device. If the device is currently active, use
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+swapoff">swapoff</A></B>(8)
+before issuing reset (otherwise -EBUSY error is returned).
+</DL>
+
+<P>
+
+<B>-s, --stats</B>
+<DL COMPACT><DT><DD>
+Show stats for given ramzswap device. If the ramzswap kernel module was compiled without STATS support, then most of the stats will be shown as 0.
+</DL>
+
+<P>
+
+<B>-v, --verbose</B>
+<DL COMPACT><DT><DD>
+Show verbose output from rzscontrol.
+</DL>
+
+<P>
+
+<B>-h, --help</B>
+<DL COMPACT><DT><DD>
+Shows usage information and some examples.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>EXAMPLES</H2>
+
+<P>
+
+Following shows a typical sequence of steps for using ramzswap. Initialization can be done with many variations of configuration parameters as shown below.
+<P>
+
+Load Module:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+insmod ramzswap.ko NUM_DEVICES=4 # creates 4 uninitialized devices: /dev/ramzswap{0,1,2,3}
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+
+Initialize:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+    rzscontrol /dev/ramzswap0 --init # uses default value of disksize_kb
+    rzscontrol /dev/ramzswap0 --disksize_kb=10240 --init
+    rzscontrol /dev/ramzswap1 --backing_swap=/dev/sda2 --init # uses default value of memlimit_kb
+    rzscontrol /dev/ramzswap1 --backing_swap=/dev/sda2 --memlimit_kb=10240 --init
+    rzscontrol /dev/ramzswap2 --backing_swap=/path/to/swap.file --memlimit_kb=10240 --init
+    
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+
+Activate:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+swapon /dev/ramzswap2 # or any other initialized ramzswap device
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+
+Stats:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+rzscontrol /dev/ramzswap2 --stats
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+
+Deactivate:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+swapoff /dev/ramzswap2
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+
+Reset:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+rzscontrol /dev/ramzswap2 --reset
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+
+Unload Module:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+rmmod ramzswap.ko
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+
+NOTE: ramzswap parameters cannot be changed once the device is initialized. It has to be reset before new parameters can be used.
+<A NAME="lbAG">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<P>
+
+<P>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+mkswap">mkswap</A></B>(8),
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+swapon">swapon</A></B>(8),
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+swapoff">swapoff</A></B>(8)
+<A NAME="lbAH">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+<P>
+
+<B>Nitin Gupta</B> &lt;<A HREF="mailto:ngupta@vflare.org">ngupta@vflare.org</A>&gt;
+<DL COMPACT><DT><DD>
+Developer
+</DL>
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">EXAMPLES</A><DD>
+<DT><A HREF="#lbAG">SEE ALSO</A><DD>
+<DT><A HREF="#lbAH">AUTHOR</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 04:50:42 GMT, July 19, 2009
+</BODY>
+</HTML>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE refentry PUBLIC 
+"-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.docbook.org/xml/4.5/docbookx.dtd"
+[
+<!ENTITY product "rzscontrol">
+]>
+
+<refentry lang="en" id="rzscontrol">
+<refentryinfo>
+<productname>&product;</productname>
+<authorgroup>
+    <author>
+        <contrib>Developer</contrib>
+            <firstname>Nitin</firstname>
+            <surname>Gupta</surname>
+            <email>ngupta@vflare.org</email>
+        </author>
+    </authorgroup>
+</refentryinfo>
+<refmeta>
+    <refentrytitle>&product;</refentrytitle>
+    <manvolnum>1</manvolnum>
+    <refmiscinfo class="version"> </refmiscinfo>
+    <refmiscinfo class="source"> </refmiscinfo>
+    <refmiscinfo class="manual"> </refmiscinfo>
+</refmeta>
+
+<refnamediv>
+    <refname>&product;</refname>
+    <refpurpose>control ramzswap devices</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="rzscontrol.synopsis">
+    <title>Synopsis</title>
+    <cmdsynopsis><command>rzscontrol</command>
+        <arg choice="req">ramzswap device</arg>
+        <arg choice="opt">-b|--backing_swap=&lt;path&gt;</arg>
+        <arg choice="opt">-m|--memlimit_kb=&lt;value&gt;</arg>
+        <arg choice="opt">-d|--disksize_kb=&lt;value&gt;</arg>
+        <arg choice="opt">-i|--init</arg>
+        <arg choice="opt">-r|--reset</arg>
+        <arg choice="opt">-s|--stats</arg>
+        <arg choice="opt">-v|--verbose</arg>
+        <arg choice="opt">-h|--help</arg>
+    </cmdsynopsis>
+</refsynopsisdiv>
+
+<refsect1 id="rzscontrol.description">
+    <title>Description</title>
+    <para>
+    The ramzswap kernel module creates multiple ramzswap devices, equal to NUM_DEVICES parameter. With rzscontrol,
+    you can control each of these devices.
+    </para>
+    <para>This is how you use a ramzswap device (/dev/ramzswapX):</para>
+    <para> - Set parameters for [backing swap, memory limit] or [disk size] (see OPTIONS and EXAMPLES).</para>
+    <para> - Issue init once these parameters are set: rzscontrol /dev/ramzswapX --init.</para>
+    <para> - swapon /dev/ramzswapX (where X is ramzswap device id: 0, 1, 2... NUM_DEVICES-1).</para>
+    <para> - When you are done with this swap: swapoff /dev/ramzswapX. NOTE: swapoff will not free any compressed pages.</para>
+    <para> - After swapoff, issue reset: rzscontrol /dev/ramzswapX --reset. This will free all metadata and compressed pages.</para>
+</refsect1>
+
+<refsect1 id="rzscontrol.options">
+    <title>Options</title>
+    <variablelist>
+        <varlistentry>
+            <term><option>-b, --backing_swap</option></term>
+            <listitem>
+            <para>Specify backing swap device. This can either be a swap block device or a swap file. Writes are forwarded to
+            this device when memory limit is reached or when a page is incompressible. You must swapoff backing swap device
+            before init is issued, otherwise init will fail with -EBUSY error. Also, backing swap must be a valid swap device,
+            otherwise 'swapon /dev/ramzswapX' will fail as if swapon was issued directly on the backing swap device.</para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>-m, --memlimit_kb</option></term>
+            <listitem>
+            <para>Specify memory limit (in KB). This is the limit on amount of memory allocated for compressed pages.
+            When this memory limit is reached, all further writes are forwarded to backing swap device. This option
+            is valid only if backing swap is specified. This must be smaller than or equal to backing swap size.
+            Default: 15% of RAM or backing swap size, whichever is smaller.</para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>-d, --disksize_kb</option></term>
+            <listitem>
+            <para>Specify ramzswap disk size (in KB). This is the limit on number of (uncompressed) pages that can
+            be stored in this device. This parameter is valid only when backing swap is not present since in that
+            case, it is implicitly equal to size of the backing swap device. Default: 25% of RAM</para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>-i, --init</option></term>
+            <listitem>
+            <para>Initialize given ramzswap device. It causes allocation of metadata for given ramzswap device and
+            makes it ready to receive swap requests. Use <citerefentry><refentrytitle>swapon</refentrytitle>
+            <manvolnum>8</manvolnum></citerefentry> to start using this device as swap.</para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>-r, --reset</option></term>
+            <listitem>
+            <para>Resets given ramzswap device. It causes deallocation of metadata and any compressed pages for given
+            ramzswap device. If the device is currently active, use <citerefentry><refentrytitle>swapoff</refentrytitle>
+            <manvolnum>8</manvolnum></citerefentry> before issuing reset (otherwise -EBUSY error is returned).</para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>-s, --stats</option></term>
+            <listitem>
+            <para>Show stats for given ramzswap device. If the ramzswap kernel module was compiled without STATS support,
+            then most of the stats will be shown as 0.</para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>-v, --verbose</option></term>
+            <listitem>
+            <para>Show verbose output from rzscontrol.</para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><option>-h, --help</option></term>
+            <listitem>
+            <para>Shows usage information and some examples.</para>
+            </listitem>
+        </varlistentry>
+    </variablelist>
+</refsect1>
+
+<refsect1 id="rzscontrol.example">
+    <title>Examples</title>
+    <para>Following shows a typical sequence of steps for using ramzswap. Initialization can be done with
+    many variations of configuration parameters as shown below.</para>
+    <para>Load Module:</para>
+    <screen>insmod ramzswap.ko NUM_DEVICES=4 # creates 4 uninitialized devices: /dev/ramzswap{0,1,2,3}</screen>
+    <para>Initialize:</para>
+    <screen>
+    rzscontrol /dev/ramzswap0 --init # uses default value of disksize_kb
+    rzscontrol /dev/ramzswap0 --disksize_kb=10240 --init
+    rzscontrol /dev/ramzswap1 --backing_swap=/dev/sda2 --init # uses default value of memlimit_kb
+    rzscontrol /dev/ramzswap1 --backing_swap=/dev/sda2 --memlimit_kb=10240 --init
+    rzscontrol /dev/ramzswap2 --backing_swap=/path/to/swap.file --memlimit_kb=10240 --init
+    </screen>
+    <para>Activate:</para>
+    <screen>swapon /dev/ramzswap2 # or any other initialized ramzswap device</screen>
+    <para>Stats:</para>
+    <screen>rzscontrol /dev/ramzswap2 --stats</screen>
+    <para>Deactivate:</para>
+    <screen>swapoff /dev/ramzswap2</screen>
+    <para>Reset:</para>
+    <screen>rzscontrol /dev/ramzswap2 --reset</screen>
+    <para>Unload Module:</para>
+    <screen>rmmod ramzswap.ko</screen>
+
+<para>NOTE: ramzswap parameters cannot be changed once the device is initialized. It has to be reset before
+new parameters can be used.</para>
+</refsect1>
+
+<refsect1 id="rzscontrol.seealso">
+    <title>See also</title>
+    <para> <citerefentry>
+           <refentrytitle>mkswap</refentrytitle>
+           <manvolnum>8</manvolnum>
+       </citerefentry>, <citerefentry>
+           <refentrytitle>swapon</refentrytitle>
+           <manvolnum>8</manvolnum>
+       </citerefentry>, <citerefentry>
+           <refentrytitle>swapoff</refentrytitle>
+           <manvolnum>8</manvolnum>
+       </citerefentry>
+    </para>
+</refsect1>
+</refentry>

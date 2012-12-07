@@ -1,0 +1,191 @@
+'\" t
+.\"     Title: rzscontrol
+.\"    Author: Nitin Gupta <ngupta@vflare.org>
+.\" Generator: DocBook XSL Stylesheets v1.74.3 <http://docbook.sf.net/>
+.\"      Date: 07/19/2009
+.\"    Manual:  
+.\"    Source:    
+.\"  Language: English
+.\"
+.TH "RZSCONTROL" "1" "07/19/2009" "" ""
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+rzscontrol \- control ramzswap devices
+.SH "SYNOPSIS"
+.HP \w'\fBrzscontrol\fR\ 'u
+\fBrzscontrol\fR {ramzswap\ device} [\-b|\-\-backing_swap=<path>] [\-m|\-\-memlimit_kb=<value>] [\-d|\-\-disksize_kb=<value>] [\-i|\-\-init] [\-r|\-\-reset] [\-s|\-\-stats] [\-v|\-\-verbose] [\-h|\-\-help]
+.SH "DESCRIPTION"
+.PP
+The ramzswap kernel module creates multiple ramzswap devices, equal to NUM_DEVICES parameter\&. With rzscontrol, you can control each of these devices\&.
+.PP
+This is how you use a ramzswap device (/dev/ramzswapX):
+.PP
+\- Set parameters for [backing swap, memory limit] or [disk size] (see OPTIONS and EXAMPLES)\&.
+.PP
+\- Issue init once these parameters are set: rzscontrol /dev/ramzswapX \-\-init\&.
+.PP
+\- swapon /dev/ramzswapX (where X is ramzswap device id: 0, 1, 2\&.\&.\&. NUM_DEVICES\-1)\&.
+.PP
+\- When you are done with this swap: swapoff /dev/ramzswapX\&. NOTE: swapoff will not free any compressed pages\&.
+.PP
+\- After swapoff, issue reset: rzscontrol /dev/ramzswapX \-\-reset\&. This will free all metadata and compressed pages\&.
+.SH "OPTIONS"
+.PP
+\fB\-b, \-\-backing_swap\fR
+.RS 4
+Specify backing swap device\&. This can either be a swap block device or a swap file\&. Writes are forwarded to this device when memory limit is reached or when a page is incompressible\&. You must swapoff backing swap device before init is issued, otherwise init will fail with \-EBUSY error\&. Also, backing swap must be a valid swap device, otherwise \'swapon /dev/ramzswapX\' will fail as if swapon was issued directly on the backing swap device\&.
+.RE
+.PP
+\fB\-m, \-\-memlimit_kb\fR
+.RS 4
+Specify memory limit (in KB)\&. This is the limit on amount of memory allocated for compressed pages\&. When this memory limit is reached, all further writes are forwarded to backing swap device\&. This option is valid only if backing swap is specified\&. This must be smaller than or equal to backing swap size\&. Default: 15% of RAM or backing swap size, whichever is smaller\&.
+.RE
+.PP
+\fB\-d, \-\-disksize_kb\fR
+.RS 4
+Specify ramzswap disk size (in KB)\&. This is the limit on number of (uncompressed) pages that can be stored in this device\&. This parameter is valid only when backing swap is not present since in that case, it is implicitly equal to size of the backing swap device\&. Default: 25% of RAM
+.RE
+.PP
+\fB\-i, \-\-init\fR
+.RS 4
+Initialize given ramzswap device\&. It causes allocation of metadata for given ramzswap device and makes it ready to receive swap requests\&. Use
+\fBswapon\fR(8)
+to start using this device as swap\&.
+.RE
+.PP
+\fB\-r, \-\-reset\fR
+.RS 4
+Resets given ramzswap device\&. It causes deallocation of metadata and any compressed pages for given ramzswap device\&. If the device is currently active, use
+\fBswapoff\fR(8)
+before issuing reset (otherwise \-EBUSY error is returned)\&.
+.RE
+.PP
+\fB\-s, \-\-stats\fR
+.RS 4
+Show stats for given ramzswap device\&. If the ramzswap kernel module was compiled without STATS support, then most of the stats will be shown as 0\&.
+.RE
+.PP
+\fB\-v, \-\-verbose\fR
+.RS 4
+Show verbose output from rzscontrol\&.
+.RE
+.PP
+\fB\-h, \-\-help\fR
+.RS 4
+Shows usage information and some examples\&.
+.RE
+.SH "EXAMPLES"
+.PP
+Following shows a typical sequence of steps for using ramzswap\&. Initialization can be done with many variations of configuration parameters as shown below\&.
+.PP
+Load Module:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+insmod ramzswap\&.ko NUM_DEVICES=4 # creates 4 uninitialized devices: /dev/ramzswap{0,1,2,3}
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Initialize:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+    rzscontrol /dev/ramzswap0 \-\-init # uses default value of disksize_kb
+    rzscontrol /dev/ramzswap0 \-\-disksize_kb=10240 \-\-init
+    rzscontrol /dev/ramzswap1 \-\-backing_swap=/dev/sda2 \-\-init # uses default value of memlimit_kb
+    rzscontrol /dev/ramzswap1 \-\-backing_swap=/dev/sda2 \-\-memlimit_kb=10240 \-\-init
+    rzscontrol /dev/ramzswap2 \-\-backing_swap=/path/to/swap\&.file \-\-memlimit_kb=10240 \-\-init
+    
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Activate:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+swapon /dev/ramzswap2 # or any other initialized ramzswap device
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Stats:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+rzscontrol /dev/ramzswap2 \-\-stats
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Deactivate:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+swapoff /dev/ramzswap2
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Reset:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+rzscontrol /dev/ramzswap2 \-\-reset
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Unload Module:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+rmmod ramzswap\&.ko
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+NOTE: ramzswap parameters cannot be changed once the device is initialized\&. It has to be reset before new parameters can be used\&.
+.SH "SEE ALSO"
+.PP
+
+\fBmkswap\fR(8),
+\fBswapon\fR(8),
+\fBswapoff\fR(8)
+.SH "AUTHOR"
+.PP
+\fBNitin Gupta\fR <\&ngupta@vflare\&.org\&>
+.RS 4
+Developer
+.RE
