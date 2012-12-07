@@ -185,6 +185,9 @@ be empty. An example would be "usb.*" -->
         <item>7</item>
     </integer-array>
 
+    <!-- The default iface on which to monitor data use -->
+    <string name="config_datause_iface">rmnet0</string>
+
     <!-- Boolean indicating whether Softap rely only on one interface -->
     <bool name="config_wifi_ap_use_single_interface">false</bool>
 
@@ -195,14 +198,38 @@ be empty. An example would be "usb.*" -->
 
     <bool name="config_unplugTurnsOnScreen">true</bool>
 
+     <!-- Values greater or equal to 0 will enable electronbeam screen-on
+         animation with the specified delay (in milliseconds), -1 will disable the animation -->
+    <integer name="config_screenOnAnimation">250</integer>
+
+    <!-- Timeout in MS for how long you have to long-press the back key to
+         kill the foreground app. -->
+    <integer name="config_backKillTimeout">1500</integer>
+
     <bool name="config_animateScreenLights">true</bool>
+    
+    <bool name="config_batterySdCardAccessibility">false</bool>
+
+    <bool name="config_intrusiveNotificationLed">false</bool>
+
+    <!-- Boolean indicating if current platform supports bluetooth SCO for off call
+    use cases -->
+    <bool name="config_bluetooth_sco_off_call">true</bool>
+
+    <!-- Component name of the service providing network location support. -->
+    <string name="config_networkLocationProvider">com.google.android.location.NetworkLocationProvider</string>
+
+    <!-- Component name of the service providing geocoder API support. -->
+    <string name="config_geocodeProvider">com.google.android.location.GeocodeProvider</string>
+
+    <!-- Boolean indicating if current platform supports bluetooth wide band
+         speech -->
+    <bool name="config_bluetooth_wide_band_speech">false</bool>
 
     <!-- Boolean indicating if current platform supports quick switch-on/off of
          Bluetooth Module -->
     <bool name="config_bluetooth_adapter_quick_switch">false</bool>
 
-    <!-- Base "touch slop" value used by ViewConfiguration as a
-         movement threshold where scrolling should begin. -->
-    <dimen name="config_viewConfigurationTouchSlop">12dp</dimen>
+    <string name="config_legacyUmsLunFile">/sys/devices/platform/msm_hsusb/gadget/lun0/file</string>
 
 </resources>
