@@ -78,7 +78,7 @@ const uint32_t inputSamplingRates[] = {
 //Audio hardware related parameters
 #define CODEC_TYPE_PCM 0
 #define AUDIO_HW_NUM_OUT_BUF 2                              // Number of buffers in audio driver for output
-#define AUDIO_HW_OUT_LATENCY_MS 80                          // Additional latency introduced by audio DSP and hardware in ms
+#define AUDIO_HW_OUT_LATENCY_MS 70                          // Additional latency introduced by audio DSP and hardware in ms
 
 #define AUDIO_HW_IN_SAMPLERATE 8000                         // Default audio input sample rate
 #define AUDIO_HW_IN_CHANNELS (AudioSystem::CHANNEL_IN_MONO) // Default audio input channel mask
