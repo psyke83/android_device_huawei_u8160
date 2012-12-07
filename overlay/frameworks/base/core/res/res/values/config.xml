@@ -62,21 +62,20 @@ Must be overridden in platform specific overlays -->
      <item>2601</item>
     </integer-array>
 
-
     <!-- Array of output values for LCD backlight corresponding to the LUX values
 in the config_autoBrightnessLevels array. This array should have size one greater
 than the size of the config_autoBrightnessLevels array.
 -->
     <integer-array name="config_autoBrightnessLcdBacklightValues">
-     <item>8</item>
-     <item>16</item>
-     <item>34</item>
-     <item>61</item>
-     <item>96</item>
-     <item>138</item>
-     <item>167</item>
-     <item>195</item>
-     <item>227</item>
+     <item>80</item>
+     <item>80</item>
+     <item>80</item>
+     <item>80</item>
+     <item>105</item>
+     <item>130</item>
+     <item>160</item>
+     <item>185</item>
+     <item>210</item>
      <item>255</item>
     </integer-array>
 
@@ -90,7 +89,7 @@ than the size of the config_autoBrightnessLevels array.
      <item>255</item>
      <item>255</item>
      <item>255</item>
-     <item>0</item>
+     <item>255</item>
      <item>0</item>
      <item>0</item>
      <item>0</item>
@@ -191,6 +190,12 @@ be empty. An example would be "usb.*" -->
 
     <!-- Boolean indicating whether Softap require reloading AP firware -->
     <bool name="config_wifi_ap_firmware_reload">true</bool>
+
+    <bool name="config_automatic_brightness_available">true</bool>
+
+    <bool name="config_unplugTurnsOnScreen">true</bool>
+
+    <bool name="config_animateScreenLights">true</bool>
 
     <!-- Boolean indicating if current platform supports quick switch-on/off of
          Bluetooth Module -->
