@@ -1,4 +1,5 @@
 import init.u8160.usb.rc
+import init.u8160.parts.rc
 
 on early-init
     export EXTERNAL_STORAGE /mnt/sdcard

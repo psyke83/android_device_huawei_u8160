@@ -83,6 +83,11 @@ PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/init.u8160.usb.rc:root/init.u8160.usb.rc \
     device/huawei/u8160/prebuilt/ueventd.u8160.rc:root/ueventd.u8160.rc
 
+# U8160Parts
+PRODUCT_COPY_FILES += \
+    device/huawei/u8160/prebuilt/init.u8160.parts.rc:root/init.u8160.parts.rc \
+    device/huawei/u8160/prebuilt/bin/handle_u8160parts:system/bin/handle_u8160parts
+
 # Wi-Fi related
 PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/wifi/dhd.ko:root/wifi/dhd.ko \

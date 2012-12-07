@@ -1,0 +1,20 @@
+on boot
+
+# U8160Parts - helper service
+service u8160parts /system/bin/sh /system/bin/handle_u8160parts
+    class main
+    user root
+    group root
+    oneshot
+    disabled
+
+on property:persist.sys.swap=0
+    exec /system/xbin/swapoff /dev/block/mmcblk0p3
+    start compcache
+
+on property:persist.sys.swap=1
+    stop compcache
+    exec /system/xbin/swapon /dev/block/mmcblk0p3
+
+on property:persist.sys.read_ahead_kb=*
+    start u8160parts

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Huawei device settings</string>
+    <string name="attn_fm">Attenuation - FM radio</string>
+    <string name="attn_headset">Attenuation - headset</string>
+    <string name="attn_speaker">Attenuation - speaker</string>
+    <string name="audio_cat">Audio attenuation</string>
+    <string name="backprocesslimit">Background process limit</string>
+    <string name="bug_report_success">Bug report generated to</string>
+    <string name="cache_size">SD card read-ahead buffer</string>
+    <string name="cancel">Cancel</string>
+    <string name="current_setting">Current setting:</string>
+    <string name="disabled">disabled</string>
+    <string name="gen_bug_report">Generate bug report</string>
+    <string name="gen_bug_report_summary">Dumps system logs to SD card for bug reporting purposes</string>
+    <string name="log_cat">Report bug</string>
+    <string name="memory_man">Memory management</string>
+    <string name="processing">Processing…</string>
+    <string name="sd_not_mounted">SD card is not mounted</string>
+    <string name="swap_cce">zRam is enabled. You\'ll need to disable it first</string>
+    <string name="swap_sum">Use SD card swap partition as virtual memory, allowing more applications to remain open</string>
+</resources>

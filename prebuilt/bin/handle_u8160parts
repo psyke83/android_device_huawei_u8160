@@ -1,0 +1,24 @@
+#!/system/bin/sh
+# handle_u8160parts
+# by psyke83
+
+isbooted=$(getprop sys.boot_completed)
+sdreadahead=$(getprop persist.sys.read_ahead_kb)
+speeds=(128 256 512 1024 2048 4096)
+newspeed=${speeds[$sdreadahead]}
+
+# If Android is not fully booted, don't set the default
+# read-ahead size (or it could interfere with user scripts)
+if [ "$isbooted" = "0" ] && [ "$newspeed" = "128" ]; then
+  echo "Warning: not setting SD card read-ahead buffer"
+  exit
+fi
+
+# Set SD read_ahead_kb
+echo "Setting new SD card read-ahead buffer: $newspeed"
+echo $newspeed > /sys/devices/virtual/bdi/179:0/read_ahead_kb
+
+exit
+
+
+
