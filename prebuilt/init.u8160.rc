@@ -22,9 +22,6 @@ on boot
     chown bluetooth bluetooth /proc/bluetooth/sleep/proto
     chmod 0660 /proc/bluetooth/sleep/proto
 
-    # Increase read throughput from sd card
-    write /sys/block/mmcblk0/bdi/read_ahead_kb 256
-
     # Enable KSM (Kernel SamePage Mapping)
     write /sys/kernel/mm/ksm/sleep_millisecs 4000
     write /sys/kernel/mm/ksm/pages_to_scan 128
@@ -32,10 +29,6 @@ on boot
 
     chown system system /sys/bus/platform/devices/msm_sdcc.1/polling
     chown system system /sys/bus/platform/devices/msm_sdcc.2/polling
-
-# Temporary hack to prevent framebuffer flicker
-    chmod 0777 /sys/class/graphics/fb0/state
-    write /sys/class/graphics/fb0/state 1
 
 service qmuxd /system/bin/qmuxd
     class main
