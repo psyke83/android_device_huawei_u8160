@@ -106,11 +106,17 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/etc/bluetooth/audio.conf:system/etc/bluetooth/audio.conf
 
-# Touchscreen & keys
+# Touchscreen
 PRODUCT_COPY_FILES += \
-    device/huawei/u8160/prebuilt/usr/idc/synaptics.idc:system/usr/idc/synaptics.idc \
-    device/huawei/u8160/prebuilt/usr/keylayout/synaptics.kl:system/usr/keylayout/synaptics.kl \
-    device/huawei/u8160/prebuilt/usr/keylayout/7k_handset.kl:system/usr/keylayout/7k_handset.kl
+    device/huawei/u8160/prebuilt/usr/idc/touchscreen.idc:system/usr/idc/melfas-touchscreen.idc \
+    device/huawei/u8160/prebuilt/usr/idc/touchscreen.idc:system/usr/idc/synaptics.idc \
+    device/huawei/u8160/prebuilt/usr/idc/touchscreen.idc:system/usr/idc/synaptics-rmi-touchscreen.idc
+
+# Keylayouts
+PRODUCT_COPY_FILES += \
+    device/huawei/u8160/prebuilt/usr/keylayout/touchscreen-keys.kl:system/usr/keylayout/melfas-touchscreen.kl \
+    device/huawei/u8160/prebuilt/usr/keylayout/touchscreen-keys.kl:system/usr/keylayout/synaptics.kl \
+    device/huawei/u8160/prebuilt/usr/keylayout/touchscreen-keys.kl:system/usr/keylayout/synaptics-rmi-touchscreen.kl
 
 # USB autorun.iso for cdrom emulation in kernel driver
 PRODUCT_COPY_FILES += \
