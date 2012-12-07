@@ -122,11 +122,9 @@ PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/etc/sysctl.conf:system/etc/sysctl.conf \
     device/huawei/u8160/prebuilt/etc/vold.fstab:system/etc/vold.fstab
 
-# MADTEAM & ICS HACKS
+# Huawei hardware setup
 PRODUCT_COPY_FILES += \
-    device/huawei/u8160/prebuilt/bin/madconfig:system/bin/madconfig \
-    device/huawei/u8160/prebuilt/etc/init.d/02getmacaddrs:system/etc/init.d/02getmacaddrs \
-    device/huawei/u8160/prebuilt/etc/init.d/02madteam:system/etc/init.d/02madteam
+    device/huawei/u8160/prebuilt/etc/init.d/02setuphuawei:system/etc/init.d/02setuphuawei
 
 # Ensure that /cache is never used for deodexing
 PRODUCT_PROPERTY_OVERRIDES += \
