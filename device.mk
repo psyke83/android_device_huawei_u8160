@@ -49,13 +49,13 @@ PRODUCT_PACKAGES += \
 # Other
 PRODUCT_PACKAGES += \
     camera.u8160 \
-    FileManager \
+    CMFileManager \
+    Gallery \
     gps.u8160 \
     huawei_brcm_patchram_plus \
     lights.u8160 \
     Music \
-    SoundRecoder \
-    VoiceDialer
+    U8160Parts
 
 # Hardware permissions
 PRODUCT_COPY_FILES += \
@@ -118,14 +118,9 @@ PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/usr/keylayout/touchscreen-keys.kl:system/usr/keylayout/synaptics.kl \
     device/huawei/u8160/prebuilt/usr/keylayout/touchscreen-keys.kl:system/usr/keylayout/synaptics-rmi-touchscreen.kl
 
-# USB autorun.iso for cdrom emulation in kernel driver
-PRODUCT_COPY_FILES += \
-    device/huawei/u8160/prebuilt/cdrom/autorun.iso:system/cdrom/autorun.iso
-
 # Other
 PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/lib/egl/egl.cfg:system/lib/egl/egl.cfg \
-    device/huawei/u8160/prebuilt/etc/sysctl.conf:system/etc/sysctl.conf \
     device/huawei/u8160/prebuilt/etc/vold.fstab:system/etc/vold.fstab
 
 # Huawei hardware setup
