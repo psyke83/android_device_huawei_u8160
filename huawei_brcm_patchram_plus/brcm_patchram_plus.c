@@ -111,6 +111,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <unistd.h>
 
 #include <stdlib.h>
 
@@ -180,7 +181,11 @@ uchar hci_write_bd_addr[] = { 0x01, 0x01, 0xfc, 0x06,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
 uchar hci_write_sleep_mode[] = { 0x01, 0x27, 0xfc, 0x0c,
+#ifdef HUAWEI_BLUETOOTH
 	0x01, 0x01, 0x01, 0x00, 0x00, 0x01, 0x01, 0x00, 0x00, 0x00,
+#else
+	0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00,
+#endif
 	0x00, 0x00 };
 
 uchar hci_write_sco_pcm_int[] =
@@ -192,29 +197,74 @@ uchar hci_write_pcm_data_format[] =
 uchar hci_write_i2spcm_interface_param[] =
 	{ 0x01, 0x6d, 0xFC, 0x04, 0x00, 0x00, 0x00, 0x00 };
 
+#ifdef SAMSUNG_BLUETOOTH
+char* get_samsung_bluetooth_type()
+{
+    char buf[10];
+    int fd = open("/data/.cid.info", O_RDONLY);
+    if (fd < 0) {
+        fprintf(stderr, "couldn't open file /data/.cid.info for reading\n");
+        return NULL;
+    }
+
+    if (read(fd, buf, sizeof(buf)) < 0) {
+        close(fd);
+        return NULL;
+    }
+
+    close(fd);
+
+    if (strncmp(buf, "murata", 6) == 0)
+        return "_murata";
+
+    if (strncmp(buf, "semcove", 7) == 0)
+        return "_semcove";
+
+    if (strncmp(buf, "semcosh", 7) == 0)
+        return "_semcosh";
+
+    return NULL;
+}
+#endif
+
 int
 parse_patchram(char *optarg)
 {
-	char *p;
+    char *p;
 
-	if (!(p = strrchr(optarg, '.'))) {
-		fprintf(stderr, "file %s not an HCD file\n", optarg);
-		exit(3);
-	}
+    if (!(p = strrchr(optarg, '.'))) {
+        fprintf(stderr, "file %s not an HCD file\n", optarg);
+        exit(3);
+    }
 
-	p++;
+    p++;
 
-	if (strcasecmp("hcd", p) != 0) {
-		fprintf(stderr, "file %s not an HCD file\n", optarg);
-		exit(4);
-	}
+    if (strcasecmp("hcd", p) != 0) {
+        fprintf(stderr, "file %s not an HCD file\n", optarg);
+        exit(4);
+    }
 
-	if ((hcdfile_fd = open(optarg, O_RDONLY)) == -1) {
-		fprintf(stderr, "file %s could not be opened, error %d\n", optarg, errno);
-		exit(5);
-	}
+#ifdef SAMSUNG_BLUETOOTH
+    char optarg2[256];
+    char* type = get_samsung_bluetooth_type();
+    char* fext = ".hcd";
 
-	return(0);
+    if (type != NULL) {
+        memset(optarg2, 0, 256);
+        strncpy(optarg2, optarg, strlen(optarg) - 4);
+        strcpy(optarg2 + strlen(optarg2), type);
+        strcpy(optarg2 + strlen(optarg2), fext);
+        optarg = optarg2;
+        fprintf(stderr, "using %s as hcdfile\n", optarg);
+    }
+#endif
+
+    if ((hcdfile_fd = open(optarg, O_RDONLY)) == -1) {
+        fprintf(stderr, "file %s could not be opened, error %d\n", optarg, errno);
+        exit(5);
+    }
+
+    return(0);
 }
 
 void
@@ -288,9 +338,19 @@ parse_bdaddr(char *optarg)
 	int bd_addr[6];
 	int i;
 
-	sscanf(optarg, "%02X:%02X:%02X:%02X:%02X:%02X",
+	if (sscanf(optarg, "%02X:%02X:%02X:%02X:%02X:%02X",
 		&bd_addr[5], &bd_addr[4], &bd_addr[3],
-		&bd_addr[2], &bd_addr[1], &bd_addr[0]);
+		&bd_addr[2], &bd_addr[1], &bd_addr[0]) != 6)
+	{
+		/* Parse failure. Samsung bt.tx has a different format, try that one */
+		if (sscanf(optarg, "bt_macaddr:%02X%02X%02X%02X%02X%02X",
+			&bd_addr[5], &bd_addr[4], &bd_addr[3],
+			&bd_addr[2], &bd_addr[1], &bd_addr[0]) != 6)
+		{
+			fprintf(stderr, "bdaddr %s is in an unknown format\n", optarg);
+			return 1;
+		}
+	}
 
 	for (i = 0; i < 6; i++) {
 		hci_write_bd_addr[4 + i] = bd_addr[i];
@@ -514,7 +574,7 @@ parse_cmd_line(int argc, char **argv)
 			printf ("%s \n", argv[optind]);
 		if ((uart_fd = open(argv[optind], O_RDWR | O_NOCTTY)) == -1) {
 			fprintf(stderr, "port %s could not be opened, error %d\n",
-					argv[2], errno);
+					argv[optind], errno);
 		}
 	}
 
@@ -748,9 +808,10 @@ read_default_bdaddr()
 
 	char path[PROPERTY_VALUE_MAX];
 
-	char bdaddr[18];
-	int len = 17;
-	memset(bdaddr, 0, (len + 1) * sizeof(char));
+	char *bdaddr;
+	int len;
+
+	struct stat st;
 
 	property_get("ro.bt.bdaddr_path", path, "");
 	if (path[0] == 0)
@@ -763,16 +824,19 @@ read_default_bdaddr()
 		return;
 	}
 
+	fstat(fd, &st);
+	len = st.st_size;
+
+	bdaddr = malloc(len + 1);
 	sz = read(fd, bdaddr, len);
+	bdaddr[len] = '\0';
 	if (sz < 0) {
 		fprintf(stderr, "read(%s) failed: %s (%d)", path, strerror(errno),
 				errno);
-		close(fd);
-		return;
+		goto exit;
 	} else if (sz != len) {
 		fprintf(stderr, "read(%s) unexpected size %d", path, sz);
-		close(fd);
-		return;
+		goto exit;
 	}
 
 	if (debug) {
@@ -780,6 +844,9 @@ read_default_bdaddr()
 	}
 
 	parse_bdaddr(bdaddr);
+exit:
+	close(fd);
+	free(bdaddr);
 }
 #endif
 
