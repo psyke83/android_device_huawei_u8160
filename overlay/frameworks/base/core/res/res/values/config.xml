@@ -161,6 +161,7 @@ USB interfaces. If the device doesn't want to support tething over USB this shou
 be empty. An example would be "usb.*" -->
     <string-array translatable="false" name="config_tether_usb_regexs">
         <item>"rndis\\d"</item>
+	<item>"usb\\d"</item>
     </string-array>
 
     <string-array translatable="false" name="config_tether_wifi_regexs">

@@ -74,14 +74,18 @@ PRODUCT_COPY_FILES += \
 # Vold and USB
 PRODUCT_COPY_FILES += \
     device/huawei/u8160/prebuilt/etc/vold.fstab:system/etc/vold.fstab \
-    device/huawei/u8160/prebuilt/etc/start_usb0.sh:system/etc/start_usb0.sh \
     device/huawei/u8160/prebuilt/etc/media_profiles.xml:system/etc/media_profiles.xml
 
 # Init files
 PRODUCT_COPY_FILES += \
+    device/huawei/u8160/prebuilt/init.rc:root/init.rc \
     device/huawei/u8160/prebuilt/init.u8160.rc:root/init.u8160.rc \
     device/huawei/u8160/prebuilt/init.u8160.usb.rc:root/init.u8160.usb.rc \
     device/huawei/u8160/prebuilt/ueventd.u8160.rc:root/ueventd.u8160.rc
+
+# Tethering
+PRODUCT_COPY_FILES += \
+    device/huawei/u8160/prebuilt/bin/huawei_tether:system/bin/huawei_tether
 
 # U8160Parts
 PRODUCT_COPY_FILES += \

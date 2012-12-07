@@ -1,43 +1,31 @@
-on init
-    write /sys/module/g_android/parameters $ro.serialno
-    write /sys/module/g_android/parameters/product_id 1038
-    write /sys/devices/platform/android_usb/functions/cur_pid 1038
-    write /sys/devices/platform/android_usb/functions/enable_switch 0
-
 on boot
-   start start_usb0
 
-on property:sys.usb.config=adb
-    write /sys/module/g_android/parameters/product_id 1038
-    start adbd
+service huawei_tether /system/bin/sh /system/bin/huawei_tether
+    class main
+    user root
+    group root
+    oneshot
+    disabled
+
+on property:sys.usb.config=mass_storage
+    start huawei_tether
+    setprop sys.usb.state $sys.usb.config
+
+on property:sys.usb.config=adb,mass_storage
+    start huawei_tether
     setprop sys.usb.state $sys.usb.config
 
 on property:sys.usb.config=mass_storage,adb
-    write /sys/module/g_android/parameters/product_id 1038
-    start adbd
-    setprop sys.usb.state $sys.usb.config
-
-on property:sys.usb.config=mass_storage
-    write /sys/module/g_android/parameters/product_id 1038
+    start huawei_tether
     setprop sys.usb.state $sys.usb.config
 
 on property:sys.usb.config=rndis
-    write /sys/module/g_android/parameters/product_id 1039
+    ifup usb0
+    start huawei_tether
     setprop sys.usb.state $sys.usb.config
 
 on property:sys.usb.config=rndis,adb
-    write /sys/module/g_android/parameters/product_id 1039
-    start adbd
+    ifup usb0
+    start huawei_tether
     setprop sys.usb.state $sys.usb.config
 
-on property:sys.usb.config=mass_storage,rndis,adb
-    write /sys/module/g_android/parameters/product_id 1039
-    start adbd
-    setprop sys.usb.state $sys.usb.config
-
-# Adding this in because adb is being removed from persist.sys.usb.config after booting
-on property:persist.service.adb.enable=1
-    start adbd
-
-on property:persist.service.adb.enable=0
-    stop adbd

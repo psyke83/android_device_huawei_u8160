@@ -39,6 +39,7 @@ TARGET_CPU_ABI2 := armeabi
 # Target properties
 TARGET_BOOTLOADER_BOARD_NAME := u8160
 TARGET_OTA_ASSERT_DEVICE := u8160,hwu8160
+TARGET_PROVIDES_INIT_RC := true
 
 # Target information
 TARGET_NO_BOOTLOADER := true

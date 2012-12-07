@@ -1,0 +1,35 @@
+#!/system/bin/sh
+
+# huawei_tether - for Huawei U81XX series phones
+# by psyke83
+# purpose: workaround kernel panic on restarting
+#          adbd and changing USB product_id values.
+
+config=$(getprop sys.usb.config)
+
+changepid() {
+echo $1 > /sys/module/g_android/parameters/product_id
+sleep 1
+stop adbd
+if [ "$2" = "restart" ]; then
+  sleep 1
+  start adbd
+fi
+}
+
+case $config in
+    "adb,mass_storage" | "mass_storage,adb")
+        changepid 1038 restart
+    ;;
+    "mass_storage")
+        changepid 1037
+    ;;
+    "rndis")
+        changepid 1039
+    ;;
+    "rndis,adb" | "adb,rndis")
+        changepid 1039 restart
+    ;;
+esac
+
+exit 0
