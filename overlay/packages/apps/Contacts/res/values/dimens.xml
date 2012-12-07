@@ -1,4 +1,8 @@
 <resources>
-    <dimen name="dialpad_vertical_margin">4dip</dimen>
-    <dimen name="dialpad_digits_text_size">32sp</dimen>
+    <!-- Height of edit text in dialpad fragment -->
+    <dimen name="dialpad_horizontal_margin">0dip</dimen>
+    <dimen name="dialpad_vertical_margin">0dip</dimen>
+    <dimen name="dialpad_digits_text_size">28sp</dimen>
+    <!-- digits_text_size reduced from 35sp to 28sp -->
+
 </resources>

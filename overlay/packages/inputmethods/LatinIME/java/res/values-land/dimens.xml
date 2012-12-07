@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <add-resource type="dimen" name="key_height"></add-resource>
+    <add-resource type="fraction" name="rowHeight"></add-resource>
+    <fraction name="rowHeight">25%p</fraction>
+    <dimen name="key_height">2.000in</dimen>
+    <fraction name="minKeyboardHeight">20%p</fraction>
+    <fraction name="keyboard_bottom_padding">-1.0%p</fraction>
+    <fraction name="keyboard_bottom_padding_ics">-1.0%p</fraction>
+</resources>

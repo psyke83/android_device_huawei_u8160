@@ -4,6 +4,6 @@
     </style>
 
     <style name="TextAppearance.Medium">
-        <item name="android:textSize">17sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 </resources>
