@@ -67,10 +67,9 @@ struct private_handle_t {
 #endif
     
     enum {
-        PRIV_FLAGS_FRAMEBUFFER  = 0x00000001,
-        PRIV_FLAGS_USES_PMEM    = 0x00000002,
-        PRIV_FLAGS_USES_GPU     = 0x00000004,
-        PRIV_FLAGS_DO_NOT_FLUSH = 0x00000020,
+        PRIV_FLAGS_FRAMEBUFFER = 0x00000001,
+        PRIV_FLAGS_USES_PMEM   = 0x00000002,
+        PRIV_FLAGS_USES_GPU    = 0x00000004,
     };
 
     // file-descriptors

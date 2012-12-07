@@ -216,7 +216,12 @@ int mapFrameBufferLocked(struct private_module_t* module)
     if (ioctl(fd, FBIOGET_VSCREENINFO, &info) == -1)
         return -errno;
 
-    int refreshRate = 0;
+    int refreshRate = 1000000000000000LLU /
+    (
+            uint64_t( info.upper_margin + info.lower_margin + info.yres )
+            * ( info.left_margin  + info.right_margin + info.xres )
+            * info.pixclock
+    );
 
     if (refreshRate == 0) {
         // bleagh, bad info from the driver
@@ -285,7 +290,7 @@ int mapFrameBufferLocked(struct private_module_t* module)
 
     int err;
     size_t fbSize = roundUpToPageSize(finfo.line_length * info.yres_virtual);
-    module->framebuffer = new private_handle_t(fd, fbSize,
+    module->framebuffer = new private_handle_t(dup(fd), fbSize,
             private_handle_t::PRIV_FLAGS_USES_PMEM);
 
     module->numBuffers = info.yres_virtual / info.yres;
@@ -367,9 +372,6 @@ int fb_device_open(hw_module_t const* module, const char* name,
 
             *device = &dev->device.common;
         }
-
-	// Close the gralloc module
-	gralloc_close(gralloc_device);
     }
     return status;
 }

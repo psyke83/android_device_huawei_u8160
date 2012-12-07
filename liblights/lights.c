@@ -69,6 +69,9 @@ char const*const RED_FREQ_FILE
 char const*const RED_PWM_FILE
         = "/sys/class/leds/red/device/grppwm";
 
+char const*const RED_BLINK_FILE
+        = "/sys/class/leds/red/device/blink";
+
 char const*const AMBER_BLINK_FILE
         = "/sys/class/leds/amber/blink";
 
@@ -270,6 +273,7 @@ set_speaker_light_locked(struct light_device_t* dev,
             write_int(RED_FREQ_FILE, freq);
             write_int(RED_PWM_FILE, pwm);
         }
+        write_int(RED_BLINK_FILE, blink);
     } else {
         write_int(AMBER_BLINK_FILE, blink);
     }

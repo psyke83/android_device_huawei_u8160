@@ -205,38 +205,5 @@ int gralloc_perform(struct gralloc_module_t const* module,
         int operation, ... )
 {
     int res = -EINVAL;
-    va_list args;
-    va_start(args, operation);
-
-    switch (operation) {
-        case GRALLOC_MODULE_PERFORM_CREATE_HANDLE_FROM_BUFFER: {
-            int fd = va_arg(args, int);
-            size_t size = va_arg(args, size_t);
-            size_t offset = va_arg(args, size_t);
-            void* base = va_arg(args, void*);
-
-            // validate that it's indeed a pmem buffer
-            pmem_region region;
-            if (ioctl(fd, PMEM_GET_SIZE, &region) < 0) {
-                break;
-            }
-
-            native_handle_t** handle = va_arg(args, native_handle_t**);
-            private_handle_t* hnd = (private_handle_t*)native_handle_create(
-                    private_handle_t::sNumFds, private_handle_t::sNumInts);
-            hnd->magic = private_handle_t::sMagic;
-            hnd->fd = fd;
-            hnd->flags = private_handle_t::PRIV_FLAGS_USES_PMEM |
-                         private_handle_t::PRIV_FLAGS_DO_NOT_FLUSH;
-            hnd->size = size;
-            hnd->offset = offset;
-            hnd->base = intptr_t(base) + offset;
-            *handle = (native_handle_t *)hnd;
-            res = 0;
-            break;
-        }
-    }
-
-    va_end(args);
     return res;
 }

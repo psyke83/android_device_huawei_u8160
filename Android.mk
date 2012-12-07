@@ -15,5 +15,5 @@
 #
 
 ifeq ($(TARGET_BOOTLOADER_BOARD_NAME),u8160)
-  include $(call all-named-subdir-makefiles, huawei_brcm_patchram_plus libaudio libcamera libcopybit libgralloc liblights libopencorehw librpc libstagefrighthw recovery U8160Parts)
+  include $(call all-named-subdir-makefiles, huawei_brcm_patchram_plus libaudio libcamera libcopybit libgralloc liblights libopencorehw librpc libstagefrighthw mm-core recovery U8160Parts)
 endif 

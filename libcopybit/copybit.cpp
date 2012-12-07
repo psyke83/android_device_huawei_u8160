@@ -134,15 +134,24 @@ static int get_format(int format) {
 static void set_image(struct mdp_img *img, const struct copybit_image_t *rhs) 
 {
     private_handle_t* hnd = (private_handle_t*)rhs->handle;
-    if(hnd == NULL){
-        LOGE("copybit: Invalid handle");
-        return;
-    }
     img->width      = rhs->w;
     img->height     = rhs->h;
     img->format     = get_format(rhs->format);
     img->offset     = hnd->offset;
+#if defined(COPYBIT_MSM7K)
+    if (hnd->flags & private_handle_t::PRIV_FLAGS_USES_GPU) {
+        img->offset += hnd->map_offset;
+        img->memory_id = hnd->gpu_fd;
+        if (img->format == MDP_RGBA_8888) {
+            // msm7201A GPU only supports BGRA_8888 destinations
+            img->format = MDP_BGRA_8888;
+        }
+    } else {
+        img->memory_id = hnd->fd;
+    }
+#else
     img->memory_id  = hnd->fd;
+#endif
 }
 /** setup rectangles */
 static void set_rects(struct copybit_context_t *dev,
@@ -185,13 +194,10 @@ static void set_rects(struct copybit_context_t *dev,
 }
 
 /** setup mdp request */
-static void set_infos(struct copybit_context_t *dev, struct mdp_blit_req *req, int flags) {
+static void set_infos(struct copybit_context_t *dev, struct mdp_blit_req *req) {
     req->alpha = dev->mAlpha;
     req->transp_mask = MDP_TRANSP_NOP;
-    req->flags = dev->mFlags | flags;
-#if defined(COPYBIT_QSD8K)
-    req->flags |= MDP_BLEND_FG_PREMULT;
-#endif
+    req->flags = dev->mFlags | MDP_BLEND_FG_PREMULT;
 }
 
 /** copy the bits */
@@ -377,12 +383,7 @@ static int stretch_copybit(
         while ((status == 0) && region->next(region, &clip)) {
             intersect(&clip, &bounds, &clip);
             mdp_blit_req* req = &list.req[list.count];
-            int flags = 0;
-            private_handle_t* src_hnd = (private_handle_t*)src->handle;
-            if(src_hnd->flags & private_handle_t::PRIV_FLAGS_DO_NOT_FLUSH) {
-                flags |=  MDP_BLIT_NON_CACHED;
-            }
-            set_infos(ctx, req, flags);
+            set_infos(ctx, req);
             set_image(&req->dst, dst);
             set_image(&req->src, src);
             set_rects(ctx, req, dst_rect, src_rect, &clip);
@@ -452,7 +453,7 @@ static int open_copybit(const struct hw_module_t* module, const char* name,
     ctx->mAlpha = MDP_ALPHA_NOP;
     ctx->mFlags = 0;
     ctx->mFD = open("/dev/graphics/fb0", O_RDWR, 0);
-
+    
     if (ctx->mFD < 0) {
         status = errno;
         LOGE("Error opening frame buffer errno=%d (%s)",
