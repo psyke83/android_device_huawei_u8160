@@ -108,14 +108,13 @@ BOARD_WPA_SUPPLICANT_DRIVER := WEXT
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wext
 WIFI_BAND  := 802_11_ABG
-BOARD_HOSTAPD_DRIVER := WEXT
-BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_wext
 BOARD_WLAN_DEVICE := bcm4329
 BOARD_WLAN_DEVICE_REV := bcm4329
 
-WIFI_DRIVER_MODULE_PATH     := "/wifi/dhd.ko"
-WIFI_DRIVER_FW_STA_PATH     := "/system/wifi/firmware.bin"
-WIFI_DRIVER_FW_AP_PATH      := "/system/wifi/firmware_apsta.bin"
+WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/dhd.ko"
+WIFI_DRIVER_FW_PATH_AP      := "/system/wifi/firmware_apsta.bin"
+WIFI_DRIVER_FW_PATH_P2P     := "/system/wifi/firmware_apsta.bin"
+WIFI_DRIVER_FW_PATH_STA     := "/system/wifi/firmware.bin"
 WIFI_DRIVER_MODULE_NAME     :=  "dhd"
 WIFI_DRIVER_MODULE_ARG      :=  "firmware_path=/system/wifi/firmware.bin nvram_path=/data/misc/wifi/nvram.txt iface_name=wlan"
 

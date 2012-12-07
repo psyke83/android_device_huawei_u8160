@@ -94,7 +94,6 @@ PRODUCT_COPY_FILES += \
 
 # Wi-Fi related
 PRODUCT_COPY_FILES += \
-    device/huawei/u8160/prebuilt/wifi/dhd.ko:root/wifi/dhd.ko \
     device/huawei/u8160/prebuilt/etc/dhcpcd/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
     device/huawei/u8160/prebuilt/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
 
